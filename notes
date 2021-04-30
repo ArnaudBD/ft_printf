@@ -1,0 +1,9 @@
+%
+%% pour "%"
+'+' > ' '
+'-' > '0'
+si *str = NULL => %.3s affiche (nu au lieu de (null) sur MACOS
+
+precision : 0 + width
+width : taille de la str
+- : precision, arg puis spaces jusqu'a width
