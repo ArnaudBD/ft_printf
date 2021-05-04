@@ -3,10 +3,8 @@
 int		numlen(int number)
 {
 	int magnitude;
-	int i;
 
 	magnitude = 0;
-	i = 0;
 
 	if (number == 0)
 		return (1);
@@ -104,7 +102,12 @@ void	print_int(int number, t_flag *flag)
 				write(1, "0", 1);
 				i++;
 			}
-		ft_putnbr_fd(number, 1);
+		if (flag->dot == 1 && flag->precision == 0 && number == 0)
+		{
+			write(1, " ", 1);
+		}
+		else
+			ft_putnbr_fd(number, 1);
 	}
 	return;
 }
@@ -114,6 +117,7 @@ int		ft_printf(const char *str, ...)
 {
 	int		i;
 	t_flag a = {.minus = 0,
+				.dot = 0,
 				.width = 0,
 				.zero = 0,
 				.precision = 0};
@@ -165,6 +169,7 @@ int		ft_printf(const char *str, ...)
 				}
 				if (str[i] == '.')
 				{
+					flag->dot = 1;
 					if (ft_isdigit(str[i + 1]))
 						flag->precision = ft_atoi(&str[++i]);
 					i++;

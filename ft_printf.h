@@ -10,6 +10,7 @@ typedef struct s_flag
 	int	width;
 	int	minus;
 	int	zero;
+	int	dot;
 	int	precision;
 } t_flag;
 
