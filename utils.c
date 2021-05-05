@@ -1,5 +1,15 @@
 #include "ft_printf.h"
 
+int		ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
