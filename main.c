@@ -2,6 +2,17 @@
 
 int main()
 {
+	char	a;
+	a = 66;
+
+	printf("printf :\n%5c\n", 'b');
+	ft_printf("ft_printf :\n%5c\n", 'b');
+	printf("printf :\n%c\n", 'b');
+	ft_printf("ft_printf :\n%c\n", 'b');
+	printf("printf :\n%-5c\n", 'b');
+	ft_printf("ft_printf :\n%-5c\n", 'b');
+
+	/*
 
 	write(1, "1\n", 2);
 	printf("un %% int %-*.5s\n", 3, "Salut!");
@@ -42,7 +53,7 @@ int main()
 	write(1, "10\n", 3);
 	printf("un %% int %s\n", "Salut!");
 	ft_printf("un %% int %s\n\n\n", "Salut!");
-/*
+
 	write(1, "11\n", 3);
 	printf("un %% int %-*.5s\n", 3, 22);
 	ft_printf("un %% int %-*.5s\n\n\n", 3, 22);

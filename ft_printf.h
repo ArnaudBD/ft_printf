@@ -24,6 +24,7 @@ void				ft_putchar_fd(char c, int fd);
 void				print_i_d(int number, t_flag *flag);
 void				print_u(unsigned int number, t_flag *flag);
 void				print_s(const char *string, t_flag *flag);
+void				print_c(const void *c, t_flag *flag);
 
 
 
