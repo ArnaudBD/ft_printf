@@ -73,7 +73,7 @@ int		ft_printf(const char *str, ...)
 		// 	print_u(va_arg(ap, unsigned int), flag);
 		else if (str[i] == 's')
 			print_s(va_arg(ap, char *), flag);
-		else if (str[i] == 'c');
+		else if (str[i] == 'c')
 			print_c(va_arg(ap, const void *), flag);
 		if (str[i] != 0)
 			i++;

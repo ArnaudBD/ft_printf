@@ -14,6 +14,7 @@ typedef struct s_flag
 	int	precision;
 } t_flag;
 
+char				*itohex(int nbr);
 int					ft_strlen(const char *s);
 int					ft_isdigit(int c);
 int					ft_atoi(const char *str);
