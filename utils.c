@@ -1,38 +1,5 @@
 #include "ft_printf.h"
 
-void	print_hex(int nbr)
-{
-	int		i;
-	int		j;
-	int		div;
-	int		quo;
-	char	base[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-
-	i = 0;
-	j = 0;
-	div = nbr / 16;
-	quo = nbr % 16;
-
-	while (div != 0)
-	{
-		div = quo / 16;
-		quo = quo % 16;
-		i++;
-	}
-	while (i != 0)
-	{
-		while (j != i)
-		{
-			write
-			j++;
-		}
-		i--;
-	}
-
-
-	return (hex);
-}
-
 int		ft_strlen(const char *s)
 {
 	int	i;
