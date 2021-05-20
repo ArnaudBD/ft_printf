@@ -26,6 +26,7 @@ void				print_u(unsigned int number, t_flag *flag);
 void				print_s(const char *string, t_flag *flag);
 void				print_c(const void *c, t_flag *flag);
 void				print_x(int nbr, t_flag *flag);
+void				print_X(int nbr, t_flag *flag);
 
 
 

@@ -77,6 +77,8 @@ int		ft_printf(const char *str, ...)
 			print_c(va_arg(ap, const void *), flag);
 		else if (str[i] == 'x')
 			print_x(va_arg(ap, int), flag);
+		else if (str[i] == 'X')
+			print_X(va_arg(ap, int), flag);
 		if (str[i] != 0)
 			i++;
 	}

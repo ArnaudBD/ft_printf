@@ -43,11 +43,18 @@ void	print_i_d(int number, t_flag *flag)
 			}
 			i = 1;
 			ft_putnbr_fd(number, 1);
-			while ((flag->width - flag->precision) > i)
-			{
-				write(1, " ", 1);
-				i++;
-			}
+			if (flag->precision < numlen(number))
+				while ((flag->width - numlen(number)) >= i)
+				{
+					write(1, " ", 1);
+					i++;
+				}
+			else
+				while ((flag->width - flag->precision) >= i )
+				{
+					write(1, " ", 1);
+					i++;
+				}
 		}
 		else if (flag->precision > numlen(number))
 		{
