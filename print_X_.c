@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-void		print_X(int nbr, t_flag *flag)
+void		print_X(int number, t_flag *flag)
 {
 	int		i;
 	int		j;
@@ -10,8 +10,8 @@ void		print_X(int nbr, t_flag *flag)
 
 	i = 0;
 	j = 0;
-	quo = nbr / 16;
-	rem = nbr % 16;
+	quo = number / 16;
+	rem = number % 16;
 
 	while (quo != 0)
 	{
@@ -19,8 +19,9 @@ void		print_X(int nbr, t_flag *flag)
 		quo = quo / 16;
 		i++;
 	}
-	quo = nbr / 16;
-	rem = nbr % 16;
+	
+	quo = number / 16;
+	rem = number % 16;
 
 	while (i >= 0)
 	{
@@ -33,8 +34,8 @@ void		print_X(int nbr, t_flag *flag)
 		write(1, &base[rem], 1);
 		i--;
 		j = 0;
-		quo = nbr / 16;
-		rem = nbr % 16;
+		quo = number / 16;
+		rem = number % 16;
 	}
 	return ;
 }
