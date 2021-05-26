@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 
+
 typedef struct s_flag
 {
 	int	width;
@@ -25,8 +26,16 @@ void				print_i_d(int number, t_flag *flag);
 void				print_u(unsigned int number, t_flag *flag);
 void				print_s(const char *string, t_flag *flag);
 void				print_c(const void *c, t_flag *flag);
-void				print_x(int nbr, t_flag *flag);
+void				print_x(unsigned int nbr, t_flag *flag, char *base);
 void				print_X(int nbr, t_flag *flag);
+void				print_xchar(int x, char c);
+int	reslen(unsigned int number, char *base);
+char	*convert_base(unsigned int number, char *base);
+void	print_p(unsigned int number, t_flag *flag, char *base);
+
+
+
+
 
 
 
