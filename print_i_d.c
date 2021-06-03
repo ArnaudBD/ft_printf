@@ -30,19 +30,22 @@ void	print_xchar(int x, char c)
 
 void	print_minus(int number, t_flag *flag)
 {
+	int j;
+
 	if (number < 0)
 	{
 		write(1, "-", 1);
 		number = -number;
+		j = 1;
 	}
 	if (flag->precision <= flag->width)
 	{
 		print_xchar(flag->precision - numlen(number), '0');
 		ft_putnbr_fd(number, 1);
 		if (flag->precision < numlen(number))
-			print_xchar(flag->width - numlen(number), ' ');
+			print_xchar(flag->width - numlen(number) - j, ' ');
 		else
-			print_xchar(flag->width - flag->precision, ' ');
+			print_xchar(flag->width - flag->precision - j, ' ');
 	}
 	else if (flag->precision > numlen(number))
 	{
@@ -56,12 +59,13 @@ void	print_spaces(int number, t_flag *flag)
 	int	i;
 	int	j;
 
+	i = 0;
 	if (number < 0)
 		j = 1;
 	while ((flag->width - (j + flag->precision)) > i
 		&& (flag->width - (j + numlen(number))) > i)
 	{
-		if (flag->zero == 1 && flag->precision == 0)
+		if (flag->zero == 1 && flag->precision <= 0)
 			break ;
 		else
 			write(1, " ", 1);
@@ -87,7 +91,7 @@ void	print_i_d(int number, t_flag *flag)
 			write(1, "-", 1);
 			number = -number;
 		}
-		if (flag->zero == 1 && flag->precision == 0)
+		if (flag->zero == 1 && flag->precision <= 0)
 			print_xchar((flag->width - (neg + numlen(number))), '0');
 		print_xchar(flag->precision - numlen(number), '0');
 		if (flag->dot == 1 && flag->precision == 0 && number == 0)

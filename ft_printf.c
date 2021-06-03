@@ -78,7 +78,7 @@ int		ft_printf(const char *str, ...)
 		else if (str[i] == 'x')
 			print_x(va_arg(ap, unsigned int), flag, "0123456789abcdef");
 		else if (str[i] == 'X')
-			print_X(va_arg(ap, int), flag);
+			print_x(va_arg(ap, unsigned int), flag, "0123456789ABCDEF");
 		else if (str[i] == 'p')
 			print_p(va_arg(ap, unsigned int), flag, "0123456789abcdef");
 		if (str[i] != 0)

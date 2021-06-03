@@ -54,7 +54,9 @@ int	reslen(unsigned int number, char *base)
 	int	quo;
 	int	rem;
 
-	i = 0;
+	if (number == 0)
+		return (1);
+	i = 1;
 	quo = number / ft_strlen(base);
 	rem = number % ft_strlen(base);
 	while (quo != 0)
@@ -73,7 +75,7 @@ char	*convert_base(unsigned int number, char *base)
 	int		rem;
 	char	*converted;
 
-	i = reslen(number, base);
+	i = reslen(number, base) - 1;
 	quo = number / ft_strlen(base);
 	rem = number % ft_strlen(base);
 	converted = malloc(sizeof(char *) * i + 1);
@@ -96,6 +98,7 @@ void	print_x(unsigned int number, t_flag *flag, char *base)
 	//int		i;
 	char	*converted;
 
+
 	// i = 0;
 	// if (flag->minus == 0)
 	// {
@@ -107,7 +110,49 @@ void	print_x(unsigned int number, t_flag *flag, char *base)
 	// 		}
 	// }
 	converted = convert_base(number, base);
-	ft_putstr_fd(converted, 1);
+	if (flag->minus == 1)
+		{
+			if (flag->precision <= flag->width)
+			{
+				print_xchar(flag->precision - reslen(number, base), '0');
+				ft_putstr_fd(converted, 1);
+
+				if (flag->precision < reslen(number, base))
+					print_xchar(flag->width - reslen(number, base), ' ');
+				else
+					print_xchar(flag->width - flag->precision, ' ');
+			}
+			else if (flag->precision > reslen(number, base))
+			{
+				print_xchar(flag->precision - reslen(number, base), '0');
+				ft_putstr_fd(converted, 1);
+			}
+			else
+				ft_putstr_fd(converted, 1);
+	}
+	else
+	{
+		if (flag->zero == 1 && flag->precision < reslen(number, base))
+		{
+			//print_xchar(flag->width - flag->precision, ' ');
+			print_xchar(flag->width - reslen(number, base), '0');
+		}
+		else if (flag->precision <= flag->width)
+			{
+				if (flag->precision < reslen(number, base))
+					print_xchar(flag->width - reslen(number, base), ' ');
+				else
+					print_xchar(flag->width - flag->precision, ' ');
+				print_xchar(flag->precision - reslen(number, base), '0');
+			}
+		else if (flag->precision > reslen(number, base))
+		{
+			print_xchar(flag->precision - reslen(number, base), '0');
+		}
+			ft_putstr_fd(converted, 1);
+	}
+
+	//ft_putstr_fd(converted, 1);
 	free(converted);
 }
 
