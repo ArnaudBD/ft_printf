@@ -1,19 +1,14 @@
 NAME = libprintf.a
 
-SRCS =  ft_printf.c\
+SRC =  ft_printf.c\
 		print_i_d.c\
-		stdarg_tests.c\ 
-		parsing.c\
+		print_c.c\
 		print_s.c\
-		test_struct.c\ 
-		print_X_.c\
 		print_u.c\
 		utils.c\
-		basic_tests.c\
-		main.c\
-		print_c.c\
-		print_x.c\
-		xtests.c\
+		print_x.c
+
+SRCS	=	$(addprefix srcs/, $(SRC))
 
 OBJS = $(SRCS:.c=.o)
 
@@ -21,24 +16,31 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
 
-INCLUDE = ft_printf.h
+AR = ar -rcs
+
+RM = rm -f
+
+# INCLUDES = /includes
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(NAME): $(OBJS)
+	make -C libft
+	cp libft/libft.a $(NAME)
+	$(AR) $(NAME) $(OBJS)
+
 all: $(NAME)
 
-
-$(NAME): $(OBJS) $(INCLUDE)
-	$(CC) $(CFLAGS) $^ -o $@
-
 clean:
+	make clean -C libft
 	$(RM) $(OBJS)
 
 fclean: clean
+	make fclean -C libft
 	$(RM) $(NAME)
 
 re: fclean all
 
 .PHONY:
-	all clean fclean re	
+	all clean fclean re
