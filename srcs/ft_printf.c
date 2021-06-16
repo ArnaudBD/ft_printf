@@ -21,37 +21,38 @@ int		ft_printf(const char *str, ...)
 			write(1, &str[i], 1);
 			i++;
 		}
-		if(str[i] == '%' && str[i + 1] == '%')
+		// if(str[i] == '%' && str[i + 1] == '%')
+		// {
+		// 	write(1, &str[i], 1);
+		// 	i++;
+		// }
+		if (str[i] == '%')
 		{
-			write(1, &str[i], 1);
 			i++;
-		}
-		else
-		{
-			while(str[i] != 'c' && str[i] != 's' && str[i] != 'p'
-  				&& str[i] != 'd' && str[i] != 'i' && str[i] != 'u'
-				&& str[i] != 'x' && str[i] != 'X' && str[i] != 0)
+			while(	str[i] != '%' && str[i] != 'c' && str[i] != 's' && str[i] != 'p'
+  					&& str[i] != 'd' && str[i] != 'i' && str[i] != 'u'
+					&& str[i] != 'x' && str[i] != 'X' && str[i] != 0)
 			{
-				if (str[i] == '%')
-					i++;
-				if (str[i] == '0')
-				{
-					flag->zero = 1;
-					i++;
-				}
+				//if (str[i] == '%')
+				//	break ;
 				if (str[i] == '-')
 				{
 					flag->minus = 1;
 					i++;
 				}
-				if (str[i] == '*')
+				if (str[i] == '0')
 				{
-					flag->width = va_arg(ap, int);
+					flag->zero = 1;
 					i++;
 				}
 				if (str[i] != '0' && ft_isdigit(str[i]))
 				{
 					flag->width = ft_atoi(&str[i]);
+					i++;
+				}
+				if (str[i] == '*')
+				{
+					flag->width = va_arg(ap, int);
 					i++;
 				}
 				if (str[i] == '.')
@@ -81,6 +82,8 @@ int		ft_printf(const char *str, ...)
 			print_x(va_arg(ap, unsigned int), flag, "0123456789ABCDEF");
 		else if (str[i] == 'p')
 			print_x(va_arg(ap, unsigned int), flag, "0123456789abcdef");
+		else if (str[i] == '%')
+			print_percentage(flag);
 		if (str[i] != 0)
 			i++;
 	}

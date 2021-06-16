@@ -32,6 +32,7 @@ void				print_xchar(int x, char c);
 int	reslen(unsigned int number, char *base, int dot);
 char	*convert_base(unsigned int number, char *base, t_flag *flag);
 void	print_p(unsigned int number, t_flag *flag, char *base);
+void	print_percentage(t_flag *flag);
 
 
 

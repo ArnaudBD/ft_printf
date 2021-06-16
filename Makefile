@@ -1,4 +1,4 @@
-NAME = libprintf.a
+NAME = libftprintf.a
 
 SRC =  ft_printf.c\
 		print_i_d.c\
@@ -6,7 +6,8 @@ SRC =  ft_printf.c\
 		print_s.c\
 		print_u.c\
 		utils.c\
-		print_x.c
+		print_x.c\
+		print_percentage.c
 
 SRCS	=	$(addprefix srcs/, $(SRC))
 

@@ -1,4 +1,4 @@
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
 
 void	print_c(const void * c, t_flag *flag)
 {

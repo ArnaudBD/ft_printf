@@ -1,4 +1,4 @@
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
 
 void	print_u(unsigned int number, t_flag *flag)
 {
