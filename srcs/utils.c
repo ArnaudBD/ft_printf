@@ -1,5 +1,13 @@
 #include "../includes/ft_printf.h"
 
+int		ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
 int		ft_strlen(const char *s)
 {
 	int	i;
@@ -15,7 +23,7 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	writing(int odg, int n, int fd)
+void	writing(long long int odg, long long int n, int fd)
 {
 	char	c;
 
@@ -28,13 +36,16 @@ void	writing(int odg, int n, int fd)
 	{
 		odg = odg / 10;
 		c = n / odg + '0';
-		ft_putchar_fd(c, fd);
+		if (ft_isdigit(c))
+			ft_putchar_fd(c, fd);
+		else
+			break ;
 		n = n - (n / odg) * odg;
 	}
 	return ;
 }
 
-void	isminmax(int n, int fd)
+void	isminmax(long long int n, int fd)
 {
 	if (n == 2147483647)
 	{
@@ -48,10 +59,10 @@ void	isminmax(int n, int fd)
 	}
 }
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(long long int n, int fd)
 {
-	int			odg;
-	long int	nb;
+	long long int	odg;
+	long long int	nb;
 
 	odg = 1;
 	nb = n;
@@ -99,12 +110,4 @@ int		ft_atoi(const char *str)
 		i++;
 	}
 	return (resultat * n);
-}
-
-int		ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
 }

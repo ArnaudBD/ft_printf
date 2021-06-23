@@ -2,11 +2,11 @@
 
 void	print_u(unsigned int number, t_flag *flag)
 {
-	if (number < 0)
-	{
-		number = 4294967295 + number;
-			printf("new is : %d\n", number);
-	}
+	// if (number < 0)
+	// {
+	// 	number = 4294967295 + number;
+	// 		printf("new is : %d\n", number);
+	// }
 	int i;
 	int j;
 
@@ -16,11 +16,11 @@ void	print_u(unsigned int number, t_flag *flag)
 		ft_putnbr_fd(number, 1);
 	else if (flag->minus == 1)
 	{
-		if (number < 0)
-		{
-			number = 4294967295 + number;
-			printf("new is : %d\n", number);
-		}
+		// if (number < 0)
+		// {
+		// 	number = 4294967295 + number;
+		// 	printf("new is : %d\n", number);
+		// }
 		if (flag->precision <= flag->width)
 		{
 			while (i < (flag->precision - numlen(number)))
@@ -60,11 +60,11 @@ void	print_u(unsigned int number, t_flag *flag)
 				write(1, " ", 1);
 			i++;
 		}
-		if (number < 0)
-		{
-			number = 4294967295 + number;
-			printf("new is : %d\n", number);
-		}
+		// if (number < 0)
+		// {
+		// 	number = 4294967295 + number;
+		// 	printf("new is : %d\n", number);
+		// }
 		i = 0;
 		if (flag->precision > flag->width)
 		{

@@ -1,7 +1,7 @@
 #include "../includes/ft_printf.h"
 
 void		print_X(int number, t_flag *flag)
-{
+{ flag = 0;
 	int		i;
 	int		j;
 	int		quo;

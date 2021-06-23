@@ -70,8 +70,8 @@ int		ft_printf(const char *str, ...)
 		}
 		if (str[i] == 'd' || str[i] == 'i')
 			print_i_d(va_arg(ap, int), flag);
-		// else if (str[i] == 'u')
-		// 	print_u(va_arg(ap, unsigned int), flag);
+		else if (str[i] == 'u')
+			print_u(va_arg(ap, unsigned int), flag);
 		else if (str[i] == 's')
 			print_s(va_arg(ap, char *), flag);
 		else if (str[i] == 'c')
@@ -81,11 +81,17 @@ int		ft_printf(const char *str, ...)
 		else if (str[i] == 'X')
 			print_x(va_arg(ap, unsigned int), flag, "0123456789ABCDEF");
 		else if (str[i] == 'p')
-			print_x(va_arg(ap, unsigned int), flag, "0123456789abcdef");
+			print_p(va_arg(ap, uintptr_t), flag, "0123456789abcdef");
 		else if (str[i] == '%')
 			print_percentage(flag);
 		if (str[i] != 0)
 			i++;
+		a.minus = 0;
+		a.dot = 0;
+		a.width = 0;
+		a.zero = 0;
+		a.precision = 0;
+
 	}
 	return 0;
 }

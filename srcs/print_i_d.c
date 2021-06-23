@@ -42,7 +42,10 @@ void	print_minus(int number, t_flag *flag)
 	if (flag->precision <= flag->width)
 	{
 		print_xchar(flag->precision - numlen(number), '0');
-		ft_putnbr_fd(number, 1);
+		if (flag->dot != 1 || flag->precision != 0 || number != 0)
+			ft_putnbr_fd(number, 1);
+		else
+			write(1," ", 1);
 		if (flag->precision < numlen(number))
 			print_xchar(flag->width - numlen(number) - j, ' ');
 		else
@@ -61,7 +64,7 @@ void	print_spaces(int number, t_flag *flag)
 	int	j;
 
 	i = 0;
-	j = 1;
+	j = 0;
 	if (number < 0)
 		j = 1;
 	while ((flag->width - (j + flag->precision)) > i
@@ -80,7 +83,7 @@ void	print_i_d(int number, t_flag *flag)
 	int	neg;
 
 	neg = 0;
-	if (numlen(number) >= flag->width && numlen(number) >= flag->precision)
+	if (numlen(number) >= flag->width && numlen(number) >= flag->precision && (flag->dot == 0 && number !=0))
 		ft_putnbr_fd(number, 1);
 	else if (flag->minus == 1)
 		print_minus(number, flag);
@@ -96,9 +99,9 @@ void	print_i_d(int number, t_flag *flag)
 		if (flag->zero == 1 && flag->precision <= 0)
 			print_xchar((flag->width - (neg + numlen(number))), '0');
 		print_xchar(flag->precision - numlen(number), '0');
-		if (flag->dot == 1 && flag->precision == 0 && number == 0)
+		if ((flag->dot == 1 && flag->precision == 0 && number == 0) && (numlen(number) < flag->width || numlen(number) < flag->precision))
 			write(1, " ", 1);
-		else
+		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
 			ft_putnbr_fd(number, 1);
 	}
 	return ;

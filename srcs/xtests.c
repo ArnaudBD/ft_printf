@@ -3,9 +3,9 @@
 
 int main()
 {
-	printf("printf\nhello, %32s.|\n", NULL);
+	printf("printf\nhello, |%u|\n", 4294967295u);
 	
-	ft_printf("ft_printf\nhello, %32s.|\n", NULL);
+	ft_printf("ft_printf\nhello, |%u|\n", 4294967295u);
 
 	return 0;
 }
