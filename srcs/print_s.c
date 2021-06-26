@@ -41,14 +41,14 @@ void	print_s(const char *string, t_flag *flag)
 						flag->precision = 6;
 					while ((k < 6 && k < flag->precision))
 					{
-						write(1, &n[k], 1);
+						ft_putchar_ret(n[k], flag);
 						k++;
 					}
 				}
 				else if (flag->precision >= 0)
 					while (flag->precision > 0 && string[i] != 0)
 					{
-						write(1, &string[i], 1);
+						ft_putchar_ret(string[i], flag);
 						i++;
 						if (flag->precision < flag->width)
 							flag->precision--;
@@ -58,7 +58,7 @@ void	print_s(const char *string, t_flag *flag)
 					flag->precision = -flag->precision + 2;
 					while (flag->precision > 0 && string[i] != 0)
 					{
-						write(1, &string[i], 1);
+						ft_putchar_ret(string[i], flag);
 						i++;
 						if (-flag->precision < flag->width)
 							flag->precision--;
@@ -69,7 +69,7 @@ void	print_s(const char *string, t_flag *flag)
 					flag->width = -flag->width;
 				while (flag->width - i - k > 0)
 				{
-					write(1, " ", 1);
+					ft_putchar_ret(' ', flag);
 					i++;
 				}
 			}
@@ -82,18 +82,18 @@ void	print_s(const char *string, t_flag *flag)
 
 					while (k < 6 && (flag->precision == 0 || k < flag->precision))
 					{
-						write(1, &n[k], 1);
+						ft_putchar_ret(n[k], flag);
 						k++;
 					}
 				}
 				else while (string[i] != 0)
 				{
-					write(1, &string[i], 1);
+					ft_putchar_ret(string[i], flag);
 					i++;
 				}
 				while (flag->width - i - k > 0)
 				{
-					write(1, " ", 1);
+					ft_putchar_ret(' ', flag);
 					i++;
 				}
 			}
@@ -106,7 +106,7 @@ void	print_s(const char *string, t_flag *flag)
 				
 				while (flag->width - (j + len) > 0 || flag->width - (j + flag->precision) > 0)
 				{
-					write(1, " ", 1);
+					ft_putchar_ret(' ', flag);
 					j++;
 				}
 				if (string == NULL)
@@ -115,13 +115,13 @@ void	print_s(const char *string, t_flag *flag)
 						i = flag->precision;
 					while (k < 6 && k < flag->precision)
 					{
-						write(1, &n[k], 1);
+						ft_putchar_ret(n[k], flag);
 						k++;
 					}
 				}
 				else while (flag->precision > 0 && string[i] != 0)
 				{
-					write(1, &string[i], 1);
+					ft_putchar_ret(string[i], flag);
 					i++;
 					flag->precision--;
 				}
@@ -138,7 +138,7 @@ void	print_s(const char *string, t_flag *flag)
 				//j = 0;
 				while (flag->width - (len + j) > 0)
 				{
-					write(1, " ", 1);
+					ft_putchar_ret(' ', flag);
 					j++;
 				}
 				if (string == NULL)
@@ -147,13 +147,13 @@ void	print_s(const char *string, t_flag *flag)
 						i = flag->precision;
 					while (k < 6 && (flag->precision == 0 || k < flag->precision))
 					{
-						write(1, &n[k], 1);
+						ft_putchar_ret(n[k], flag);
 						k++;
 					}
 				}
 				else while (string[i] != 0)
 				{
-					write(1, &string[i], 1);
+					ft_putchar_ret(string[i], flag);
 					i++;
 				}
 			}

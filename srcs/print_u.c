@@ -13,7 +13,7 @@ void	print_u(unsigned int number, t_flag *flag)
 	i = 0;
 	j = 0;
 	if (numlen(number) >= flag->width && numlen(number) >= flag->precision && (flag->dot != 1 || flag->precision != 0 || number != 0))
-		ft_putnbr_fd(number, 1);
+		ft_putnbr_ret(number, flag);
 	else if (flag->minus == 1)
 	{
 		// if (number < 0)
@@ -25,7 +25,7 @@ void	print_u(unsigned int number, t_flag *flag)
 		{
 			while (i < (flag->precision - numlen(number)))
 			{
-				write(1, "0", 1);
+				ft_putchar_ret('0', flag);
 				i++;
 			}
 			if (i != 0)
@@ -34,10 +34,10 @@ void	print_u(unsigned int number, t_flag *flag)
 				j = numlen(number);
 			i = 0;
 			if (flag->dot != 1 || flag->precision != 0 || number != 0)
-				ft_putnbr_fd(number, 1);
+				ft_putnbr_ret(number, flag);
 			while ((flag->width - j) > i)
 			{
-				write(1, " ", 1);
+				ft_putchar_ret(' ', flag);
 				i++;
 			}
 		}
@@ -46,11 +46,11 @@ void	print_u(unsigned int number, t_flag *flag)
 
 			while (i < (flag->precision - numlen(number)))
 			{
-				write(1, "0", 1);
+				ft_putchar_ret('0', flag);
 				i++;
 			}
 			if (flag->dot != 1 || flag->precision != 0 || number != 0)
-				ft_putnbr_fd(number, 1);
+				ft_putnbr_ret(number, flag);
 		}
 	}
 	else
@@ -63,7 +63,7 @@ void	print_u(unsigned int number, t_flag *flag)
 			if (flag->zero == 1 && flag->precision == 0)
 				break;
 			else
-				write(1, " ", 1);
+				ft_putchar_ret(' ', flag);
 			i++;
 		}
 		// if (number < 0)
@@ -76,7 +76,7 @@ void	print_u(unsigned int number, t_flag *flag)
 		{
 			while (i < (flag->precision - numlen(number)))
 			{
-				write(1, "0", 1);
+				ft_putchar_ret('0', flag);
 				i++;
 			}
 		}
@@ -84,22 +84,22 @@ void	print_u(unsigned int number, t_flag *flag)
 		{
 				while ((flag->width - (j + numlen(number))) > i)
 			{
-				write(1, "0", 1);
+				ft_putchar_ret('0', flag);
 				i++;
 			}
 		i = 0;
 		}
 		while (i < (flag->precision - numlen(number)))
 			{
-				write(1, "0", 1);
+				ft_putchar_ret('0', flag);
 				i++;
 			}
 		if (flag->dot == 1 && flag->precision == 0 && number == 0 && (numlen(number) < flag->width || numlen(number) < flag->precision))
 		{
-			write(1, " ", 1);
+			ft_putchar_ret(' ', flag);
 		}
 		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
-			ft_putnbr_fd(number, 1);
+			ft_putnbr_ret(number, flag);
 	}
 	return ;
 }

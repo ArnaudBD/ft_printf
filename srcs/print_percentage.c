@@ -8,21 +8,21 @@ void	print_percentage(t_flag *flag)
 	if (flag->zero == 1 && flag->minus == 0)
 		while(i > 1)
 		{
-			write(1, "0", 1);
+			ft_putchar_ret('0', flag);
 			i--;
 		}
 	else if (flag->minus == 0)
 		while(i > 1)
 		{
-			write(1, " ", 1);
+			ft_putchar_ret(' ', flag);
 			i--;
 		}
-	write(1, "%", 1);
+	ft_putchar_ret('%', flag);
 	if (flag->minus == 1)
 	{
 		while (i > 1)
 		{
-			write(1, " ", 1);
+			ft_putchar_ret(' ', flag);
 			i--;
 		}
 	}

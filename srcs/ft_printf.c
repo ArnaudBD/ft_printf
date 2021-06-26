@@ -8,7 +8,8 @@ int		ft_printf(const char *str, ...)
 				.dot = 0,
 				.width = 0,
 				.zero = 0,
-				.precision = 0};
+				.precision = 0,
+				.ret = 0};
 	t_flag	*flag = &a;
 	va_list	ap;
 	va_start(ap, str);
@@ -20,7 +21,7 @@ int		ft_printf(const char *str, ...)
 	{
 		while (str[i] != '%' && str[i] != 0)
 		{
-			write(1, &str[i], 1);
+			ft_putchar_ret(str[i], flag);
 			i++;
 		}
 		// if(str[i] == '%' && str[i + 1] == '%')
@@ -122,5 +123,5 @@ int		ft_printf(const char *str, ...)
 		a.precision = 0;
 
 	}
-	return 0;
+	return (flag->ret);
 }

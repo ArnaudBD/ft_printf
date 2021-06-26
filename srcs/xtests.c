@@ -7,8 +7,8 @@ int main()
 	char	*a01;
 
 	a01 = "Salut";
-	printf("printf\nhello, |%p|\n", &a01);
-	ft_printf("ft_printf\nhello, |%p|\n", &a01); 
+	printf("printf\nhello, |%7u|\n", 33);
+	ft_printf("ft_printf\nhello, |%7u|\n", 33); 
 
 
 	return 0;

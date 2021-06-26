@@ -20,17 +20,17 @@ int		ft_strlen(const char *s)
 
 void	ft_putchar_ret(char c, t_flag *flag)
 {
-	write(fd, &c, 1);
+	write(1, &c, 1);
 	flag->ret++;
 }
 
-void	writing(long long int odg, long long int n, int fd)
+void	writing(long long int odg, long long int n, t_flag *flag)
 {
 	char	c;
 
 	if (n == 0)
 	{
-		ft_putchar_fd('0', fd);
+		ft_putchar_ret('0', flag);
 		return ;
 	}
 	while (odg > 1)
@@ -38,7 +38,7 @@ void	writing(long long int odg, long long int n, int fd)
 		odg = odg / 10;
 		c = n / odg + '0';
 		if (ft_isdigit(c))
-			ft_putchar_fd(c, fd);
+			ft_putchar_ret(c, flag);
 		else
 			break ;
 		n = n - (n / odg) * odg;
@@ -46,21 +46,23 @@ void	writing(long long int odg, long long int n, int fd)
 	return ;
 }
 
-void	isminmax(long long int n, int fd)
+void	isminmax(long long int n, t_flag *flag)
 {
 	if (n == 2147483647)
 	{
-		write(fd, "2147483647", 10);
+		write(1, "2147483647", 10);
+		flag->ret = flag->ret + 10;
 		return ;
 	}
 	if (n == -2147483648)
 	{
-		write(fd, "-2147483648", 11);
+		write(1, "-2147483648", 11);
+		flag->ret = flag->ret + 11;
 		return ;
 	}
 }
 
-void	ft_putnbr_fd(long long int n, int fd)
+void	ft_putnbr_ret(long long int n, t_flag *flag)
 {
 	long long int	odg;
 	long long int	nb;
@@ -69,12 +71,12 @@ void	ft_putnbr_fd(long long int n, int fd)
 	nb = n;
 	if (n == 2147483647 || n == -2147483648)
 	{
-		isminmax(n, fd);
+		isminmax(n, flag);
 		return ;
 	}
 	if (n < 0)
 	{
-		write(fd, "-", 1);
+		ft_putchar_ret('-', flag);
 		n = -n;
 	}
 	while (nb != 0 && odg != 0)
@@ -83,7 +85,7 @@ void	ft_putnbr_fd(long long int n, int fd)
 		nb = n;
 		nb = nb / odg;
 	}
-	writing(odg, n, fd);
+	writing(odg, n, flag);
 	return ;
 }
 

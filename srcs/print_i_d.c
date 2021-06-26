@@ -15,14 +15,14 @@ int	numlen(int number)
 	return (magnitude);
 }
 
-void	print_xchar(int x, char c)
+void	print_xchar(int x, char c, t_flag *flag)
 {
 	int	i;
 
 	i = 0;
 	while (i < x)
 	{
-		write(1, &c, 1);
+		ft_putchar_ret(c, flag);
 		i++;
 	}
 	return ;
@@ -35,26 +35,26 @@ void	print_minus(int number, t_flag *flag)
 	j = 0;
 	if (number < 0)
 	{
-		write(1, "-", 1);
+		ft_putchar_ret('-', flag);
 		number = -number;
 		j = 1;
 	}
 	if (flag->precision <= flag->width)
 	{
-		print_xchar(flag->precision - numlen(number), '0');
+		print_xchar(flag->precision - numlen(number), '0', flag);
 		if (flag->dot != 1 || flag->precision != 0 || number != 0)
-			ft_putnbr_fd(number, 1);
+			ft_putnbr_ret(number, flag);
 		else
-			write(1," ", 1);
+			ft_putchar_ret(' ',  flag);
 		if (flag->precision < numlen(number))
-			print_xchar(flag->width - numlen(number) - j, ' ');
+			print_xchar(flag->width - numlen(number) - j, ' ', flag);
 		else
-			print_xchar(flag->width - flag->precision - j, ' ');
+			print_xchar(flag->width - flag->precision - j, ' ', flag);
 	}
 	else if (flag->precision > numlen(number))
 	{
-		print_xchar(flag->precision - numlen(number), '0');
-		ft_putnbr_fd(number, 1);
+		print_xchar(flag->precision - numlen(number), '0', flag);
+		ft_putnbr_ret(number, flag);
 	}
 }
 
@@ -73,7 +73,7 @@ void	print_spaces(int number, t_flag *flag)
 		if (flag->zero == 1 && flag->precision <= 0)
 			break ;
 		else
-			write(1, " ", 1);
+			ft_putchar_ret(' ', flag);
 		i++;
 	}
 }
@@ -84,7 +84,7 @@ void	print_i_d(int number, t_flag *flag)
 
 	neg = 0;
 	if (numlen(number) >= flag->width && numlen(number) >= flag->precision && (flag->dot == 0 && number !=0))
-		ft_putnbr_fd(number, 1);
+		ft_putnbr_ret(number, flag);
 	else if (flag->minus == 1)
 		print_minus(number, flag);
 	else
@@ -93,16 +93,16 @@ void	print_i_d(int number, t_flag *flag)
 		if (number < 0)
 		{
 			neg = 1;
-			write(1, "-", 1);
+			ft_putchar_ret('-', flag);
 			number = -number;
 		}
 		if (flag->zero == 1 && flag->precision <= 0)
-			print_xchar((flag->width - (neg + numlen(number))), '0');
-		print_xchar(flag->precision - numlen(number), '0');
+			print_xchar((flag->width - (neg + numlen(number))), '0', flag);
+		print_xchar(flag->precision - numlen(number), '0', flag);
 		if ((flag->dot == 1 && flag->precision == 0 && number == 0) && (numlen(number) < flag->width || numlen(number) < flag->precision))
-			write(1, " ", 1);
+			ft_putchar_ret(' ', flag);
 		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
-			ft_putnbr_fd(number, 1);
+			ft_putnbr_ret(number, flag);
 	}
 	return ;
 }
