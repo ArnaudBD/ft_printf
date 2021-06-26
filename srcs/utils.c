@@ -18,9 +18,10 @@ int		ft_strlen(const char *s)
 	return (i);
 }
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_putchar_ret(char c, t_flag *flag)
 {
 	write(fd, &c, 1);
+	flag->ret++;
 }
 
 void	writing(long long int odg, long long int n, int fd)

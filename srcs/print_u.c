@@ -12,7 +12,7 @@ void	print_u(unsigned int number, t_flag *flag)
 
 	i = 0;
 	j = 0;
-	if (numlen(number) >= flag->width && numlen(number) >= flag->precision)
+	if (numlen(number) >= flag->width && numlen(number) >= flag->precision && (flag->dot != 1 || flag->precision != 0 || number != 0))
 		ft_putnbr_fd(number, 1);
 	else if (flag->minus == 1)
 	{
@@ -28,9 +28,14 @@ void	print_u(unsigned int number, t_flag *flag)
 				write(1, "0", 1);
 				i++;
 			}
-			i = 1;
-			ft_putnbr_fd(number, 1);
-			while ((flag->width - flag->precision) > i)
+			if (i != 0)
+				j = flag->precision;
+			else if (flag->dot != 1 || flag->precision != 0 || number != 0)
+				j = numlen(number);
+			i = 0;
+			if (flag->dot != 1 || flag->precision != 0 || number != 0)
+				ft_putnbr_fd(number, 1);
+			while ((flag->width - j) > i)
 			{
 				write(1, " ", 1);
 				i++;
@@ -44,7 +49,8 @@ void	print_u(unsigned int number, t_flag *flag)
 				write(1, "0", 1);
 				i++;
 			}
-			ft_putnbr_fd(number, 1);
+			if (flag->dot != 1 || flag->precision != 0 || number != 0)
+				ft_putnbr_fd(number, 1);
 		}
 	}
 	else
@@ -88,12 +94,12 @@ void	print_u(unsigned int number, t_flag *flag)
 				write(1, "0", 1);
 				i++;
 			}
-		if (flag->dot == 1 && flag->precision == 0 && number == 0)
+		if (flag->dot == 1 && flag->precision == 0 && number == 0 && (numlen(number) < flag->width || numlen(number) < flag->precision))
 		{
 			write(1, " ", 1);
 		}
-		else
+		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
 			ft_putnbr_fd(number, 1);
 	}
-	return;
+	return ;
 }

@@ -2,6 +2,9 @@
 
 void	print_s(const char *string, t_flag *flag)
 {
+//	printf("PRECISION = %d\n", flag->precision);
+//	printf("WIDTH = %d\n", flag->width);
+	// printf("MINUS = %d\n", flag->minus);
 	int		i;
 	int		j;
 	int		k;
@@ -32,20 +35,38 @@ void	print_s(const char *string, t_flag *flag)
 			{
 				if (string == NULL)
 				{
-					if (i > flag->precision)
+					if (i > flag->precision && flag->precision > 0)
 						i = flag->precision;
+					else if (flag->precision < 0)
+						flag->precision = 6;
 					while ((k < 6 && k < flag->precision))
 					{
 						write(1, &n[k], 1);
 						k++;
 					}
 				}
-				else while (flag->precision > 0 && string[i] != 0)
-				{
-					write(1, &string[i], 1);
-					i++;
-					flag->precision--;
+				else if (flag->precision >= 0)
+					while (flag->precision > 0 && string[i] != 0)
+					{
+						write(1, &string[i], 1);
+						i++;
+						if (flag->precision < flag->width)
+							flag->precision--;
+					}
+				else
+					{
+					flag->precision = -flag->precision + 2;
+					while (flag->precision > 0 && string[i] != 0)
+					{
+						write(1, &string[i], 1);
+						i++;
+						if (-flag->precision < flag->width)
+							flag->precision--;
+					}
+					flag->precision = -flag->precision;
 				}
+				if (flag->width < 0)
+					flag->width = -flag->width;
 				while (flag->width - i - k > 0)
 				{
 					write(1, " ", 1);

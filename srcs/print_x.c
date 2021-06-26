@@ -96,7 +96,8 @@ char	*convert_base(unsigned int number, char *base, t_flag *flag)
 void	print_x(unsigned int number, t_flag *flag, char *base)
 {
 	char	*converted;
-
+if (flag->precision < 0)
+	flag->precision = -flag->precision;
 	converted = convert_base(number, base, flag);
 	if (flag->minus == 1)
 		{
@@ -120,7 +121,7 @@ void	print_x(unsigned int number, t_flag *flag, char *base)
 	}
 	else
 	{
-		if (flag->zero == 1 && flag->precision < reslen(number, base, flag->dot))
+		if ((flag->zero == 1 && flag->precision < reslen(number, base, flag->dot)) && flag->dot == 0)
 			print_xchar(flag->width - reslen(number, base, flag->dot), '0');
 		else if (flag->precision <= flag->width)
 			{

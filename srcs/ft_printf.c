@@ -3,6 +3,7 @@
 int		ft_printf(const char *str, ...)
 {
 	int		i;
+	int		j;
 	t_flag a = {.minus = 0,
 				.dot = 0,
 				.width = 0,
@@ -13,6 +14,7 @@ int		ft_printf(const char *str, ...)
 	va_start(ap, str);
 
 	i = 0;
+	j = 0;
 
 	while(str[i] != 0)
 	{
@@ -52,7 +54,34 @@ int		ft_printf(const char *str, ...)
 				}
 				if (str[i] == '*')
 				{
-					flag->width = va_arg(ap, int);
+					if (flag->dot == 0)
+						flag->width = va_arg(ap, int);
+					else
+						flag->precision = va_arg(ap, int);
+					// if (flag->width < 0)
+					// 	flag->minus = 1;
+					if (flag->precision < 0 && flag->minus == 0 && flag->width >= 0)
+						{
+							if (j == 1)
+							{
+								flag->width = -flag->width;
+								flag->minus = 0;
+								j = 0;
+							}
+							else
+							{
+								flag->minus = 1;
+								//flag->precision = -flag->precision;
+							}
+						}
+					// 	flag->precision = -flag->precision;
+					if (flag->width < 0 && flag->precision >= 0 /*&& flag->minus == 0*/)
+					{
+						if (flag->minus == 0)
+							flag->minus = 1;
+						flag->width = -flag->width;
+						j = 1;
+					}
 					i++;
 				}
 				if (str[i] == '.')

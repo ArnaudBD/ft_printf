@@ -3,10 +3,10 @@
 
 char	*convert_base_ptr(uintptr_t number, char *base, t_flag *flag)
 {
-	int		i;
-	int		quo;
-	int		rem;
-	char	*converted;
+	int				i;
+	uintptr_t		quo;
+	uintptr_t		rem;
+	char			*converted;
 
 	i = reslen(number, base, flag->dot) - 1;
 	quo = number / ft_strlen(base);
