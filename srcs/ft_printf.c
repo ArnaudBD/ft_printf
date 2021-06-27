@@ -36,9 +36,11 @@ int		ft_printf(const char *str, ...)
   					&& str[i] != 'd' && str[i] != 'i' && str[i] != 'u'
 					&& str[i] != 'x' && str[i] != 'X' && str[i] != 0)
 			{
+				while(str[i] == ' ')
+					i++;
 				//if (str[i] == '%')
 				//	break ;
-				if (str[i] == '-')
+				if (str[i] == '-' && flag->dot == 0)
 				{
 					flag->minus = 1;
 					i++;
@@ -46,9 +48,9 @@ int		ft_printf(const char *str, ...)
 				if (str[i] == '0')
 				{
 					flag->zero = 1;
-					i++;
+					//i++;
 				}
-				if (str[i] != '0' && ft_isdigit(str[i]))
+				if (/*str[i] != '0' && */ft_isdigit(str[i]))
 				{
 					flag->width = ft_atoi(&str[i]);
 					i++;
@@ -69,7 +71,7 @@ int		ft_printf(const char *str, ...)
 								flag->minus = 0;
 								j = 0;
 							}
-							else
+							else if (flag->dot == 0)
 							{
 								flag->minus = 1;
 								//flag->precision = -flag->precision;
@@ -96,7 +98,6 @@ int		ft_printf(const char *str, ...)
 				while (ft_isdigit(str[i]))
 					i++;
 			}
-
 		}
 		if (str[i] == 'd' || str[i] == 'i')
 			print_i_d(va_arg(ap, int), flag);

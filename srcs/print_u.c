@@ -13,7 +13,7 @@ void	print_u(unsigned int number, t_flag *flag)
 	i = 0;
 	j = 0;
 	if (numlen(number) >= flag->width && numlen(number) >= flag->precision && (flag->dot != 1 || flag->precision != 0 || number != 0))
-		ft_putnbr_ret(number, flag);
+			ft_putnbr_ret(number, flag);
 	else if (flag->minus == 1)
 	{
 		// if (number < 0)

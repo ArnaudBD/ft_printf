@@ -4,12 +4,15 @@
 
 int main()
 {
-	char	*a01;
+	int	ret;
+	int i;
 
-	a01 = "Salut";
-	printf("printf\nhello, |%7u|\n", 33);
-	ft_printf("ft_printf\nhello, |%7u|\n", 33); 
+	i = -2147483648;
 
+	ret = printf("|%1.1d|", 0);
+	printf("  >> RETURN: %d\n", ret);
+	ret = ft_printf("|%1.1d|",0);
+	printf("  << RETURN: %d\n", ret);
 
 	return 0;
 }

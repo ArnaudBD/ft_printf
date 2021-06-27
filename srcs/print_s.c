@@ -2,9 +2,10 @@
 
 void	print_s(const char *string, t_flag *flag)
 {
-//	printf("PRECISION = %d\n", flag->precision);
-//	printf("WIDTH = %d\n", flag->width);
+	// printf("PRECISION = %d\n", flag->precision);
+	// printf("WIDTH = %d\n", flag->width);
 	// printf("MINUS = %d\n", flag->minus);
+	// printf("STRING = %s\n", string);
 	int		i;
 	int		j;
 	int		k;
@@ -54,7 +55,7 @@ void	print_s(const char *string, t_flag *flag)
 							flag->precision--;
 					}
 				else
-					{
+				{
 					flag->precision = -flag->precision + 2;
 					while (flag->precision > 0 && string[i] != 0)
 					{
@@ -104,7 +105,7 @@ void	print_s(const char *string, t_flag *flag)
 			{
 				j = 0;
 				
-				while (flag->width - (j + len) > 0 || flag->width - (j + flag->precision) > 0)
+				while (flag->precision >= 0 && (flag->width - (j + len) > 0 || flag->width - (j + flag->precision) > 0))
 				{
 					ft_putchar_ret(' ', flag);
 					j++;
@@ -119,7 +120,7 @@ void	print_s(const char *string, t_flag *flag)
 						k++;
 					}
 				}
-				else while (flag->precision > 0 && string[i] != 0)
+				else while (flag->precision != 0 && string[i] != 0)
 				{
 					ft_putchar_ret(string[i], flag);
 					i++;

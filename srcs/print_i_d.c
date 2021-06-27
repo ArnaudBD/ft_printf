@@ -1,6 +1,6 @@
 #include "../includes/ft_printf.h"
 
-int	numlen(int number)
+int	numlen(long long int number)
 {
 	int	magnitude;
 
@@ -28,7 +28,7 @@ void	print_xchar(int x, char c, t_flag *flag)
 	return ;
 }
 
-void	print_minus(int number, t_flag *flag)
+void	print_minus(long long int number, t_flag *flag)
 {
 	int j;
 
@@ -67,10 +67,12 @@ void	print_spaces(int number, t_flag *flag)
 	j = 0;
 	if (number < 0)
 		j = 1;
+	if ((flag->width == numlen(number)) && flag->dot == 1 && number == 0 && flag->precision == 0)
+		ft_putchar_ret(' ', flag);
 	while ((flag->width - (j + flag->precision)) > i
 		&& (flag->width - (j + numlen(number))) > i)
 	{
-		if (flag->zero == 1 && flag->precision <= 0)
+		if (flag->zero == 1 && ((flag->dot == 0 && flag->precision <= 0) || flag->precision < 0))
 			break ;
 		else
 			ft_putchar_ret(' ', flag);
@@ -90,13 +92,13 @@ void	print_i_d(int number, t_flag *flag)
 	else
 	{
 		print_spaces(number, flag);
-		if (number < 0)
+		if (number < 0 && number != -2147483648)
 		{
 			neg = 1;
 			ft_putchar_ret('-', flag);
 			number = -number;
 		}
-		if (flag->zero == 1 && flag->precision <= 0)
+		if (flag->zero == 1 && ((flag->dot == 0 && flag->precision <= 0) || flag->precision < 0))
 			print_xchar((flag->width - (neg + numlen(number))), '0', flag);
 		print_xchar(flag->precision - numlen(number), '0', flag);
 		if ((flag->dot == 1 && flag->precision == 0 && number == 0) && (numlen(number) < flag->width || numlen(number) < flag->precision))

@@ -56,8 +56,8 @@ void	isminmax(long long int n, t_flag *flag)
 	}
 	if (n == -2147483648)
 	{
-		write(1, "-2147483648", 11);
-		flag->ret = flag->ret + 11;
+		write(1, "2147483648", 10);
+		flag->ret = flag->ret + 10;
 		return ;
 	}
 }
@@ -69,15 +69,16 @@ void	ft_putnbr_ret(long long int n, t_flag *flag)
 
 	odg = 1;
 	nb = n;
-	if (n == 2147483647 || n == -2147483648)
+	if (n < 0)
+	{
+		if (flag->dot == 0 || n == -2147483648)
+			ft_putchar_ret('-', flag);
+		n = -n;
+	}
+	if (/*flag->dot == 0 && */(n == 2147483647 || n == -2147483648))
 	{
 		isminmax(n, flag);
 		return ;
-	}
-	if (n < 0)
-	{
-		ft_putchar_ret('-', flag);
-		n = -n;
 	}
 	while (nb != 0 && odg != 0)
 	{

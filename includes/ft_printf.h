@@ -22,7 +22,7 @@ int					ft_isdigit(int c);
 int					ft_atoi(const char *str);
 void				ft_putnbr_ret(long long int n, t_flag *flag);
 int					ft_printf(const char *str, ...);
-int					numlen(int number);
+int					numlen(long long int number);
 void				ft_putchar_ret(char c, t_flag *flag);
 void				print_i_d(int number, t_flag *flag);
 void				print_u(unsigned int number, t_flag *flag);
