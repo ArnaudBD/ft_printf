@@ -114,7 +114,7 @@ void	print_s(const char *string, t_flag *flag)
 				{
 					if (i > flag->precision)
 						i = flag->precision;
-					while (k < 6 && k < flag->precision)
+					while (k < 6 && (k < flag->precision || flag->precision < 0))
 					{
 						ft_putchar_ret(n[k], flag);
 						k++;

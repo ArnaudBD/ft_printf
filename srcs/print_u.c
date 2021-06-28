@@ -60,7 +60,7 @@ void	print_u(unsigned int number, t_flag *flag)
 			j = 1;
 		while ((flag->width - (j + flag->precision)) > i && (flag->width - (j + numlen(number))) > i)
 		{
-			if (flag->zero == 1 && flag->precision == 0)
+			if (flag->zero == 1 && flag->dot == 0)
 				break;
 			else
 				ft_putchar_ret(' ', flag);
@@ -80,7 +80,7 @@ void	print_u(unsigned int number, t_flag *flag)
 				i++;
 			}
 		}
-		else if (flag->zero == 1 && flag->precision == 0)
+		else if (flag->zero == 1 && flag->dot == 0)
 		{
 				while ((flag->width - (j + numlen(number))) > i)
 			{
@@ -94,7 +94,7 @@ void	print_u(unsigned int number, t_flag *flag)
 				ft_putchar_ret('0', flag);
 				i++;
 			}
-		if (flag->dot == 1 && flag->precision == 0 && number == 0 && (numlen(number) < flag->width || numlen(number) < flag->precision))
+		if (flag->dot == 1 && flag->precision == 0 && number == 0 && (numlen(number) <= flag->width || numlen(number) < flag->precision))
 		{
 			ft_putchar_ret(' ', flag);
 		}

@@ -9,10 +9,19 @@ int main()
 
 	i = -2147483648;
 
-	ret = printf("|%1.1d|", 0);
+	ret = printf("|%.p|", NULL);
 	printf("  >> RETURN: %d\n", ret);
-	ret = ft_printf("|%1.1d|",0);
-	printf("  << RETURN: %d\n", ret);
+	ret = ft_printf("|%.p|", NULL);
+	printf("  >> RETURN: %d\n", ret);
+	// ret = printf("|%10.p|", NULL);
+	// printf("  >> RETURN: %d\n", ret);
+	// ret = ft_printf("|%10.p|", NULL);
+	// printf("  >> RETURN: %d\n", ret);
+
+	// ret = printf("|%.*p|", -3, NULL);
+	// printf("  >> RETURN: %d\n", ret);
+	// ret = ft_printf("|%.*p|", -3, NULL);
+	// printf("  << RETURN: %d\n", ret);
 
 	return 0;
 }

@@ -37,7 +37,8 @@ char	*ft_strdup(const char *src)
 void	ft_putstr_ret(char *s, t_flag *flag)
 {
 	int	i;
-
+	if (s == 0 && flag->dot == 1 && flag->precision < 0)
+		ft_putchar_ret('0', flag);
 	if (s == 0)
 		return ;
 	i = 0;

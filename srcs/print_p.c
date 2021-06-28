@@ -1,14 +1,33 @@
 #include "../includes/ft_printf.h"
 
+int	reslen_ptr(uintptr_t number, char *base, int dot)
+{
+	int	i;
+	uintptr_t	quo;
+	int	rem;
+
+	if (number == 0)
+		return (1 - dot);
+	i = 1;
+	quo = number / ft_strlen(base);
+	rem = number % ft_strlen(base);
+	while (quo != 0)
+	{
+		rem = quo % ft_strlen(base);
+		quo = quo / ft_strlen(base);
+		i++;
+	}
+	return (i);
+}
 
 char	*convert_base_ptr(uintptr_t number, char *base, t_flag *flag)
 {
 	int				i;
-	uintptr_t		quo;
-	uintptr_t		rem;
+	uintptr_t	quo;
+	uintptr_t	rem;
 	char			*converted;
 
-	i = reslen(number, base, flag->dot) - 1;
+	i = reslen_ptr(number, base, flag->dot) - 1;
 	quo = number / ft_strlen(base);
 	rem = number % ft_strlen(base);
 	converted = malloc(sizeof(char *) * i + 1);
@@ -24,26 +43,6 @@ char	*convert_base_ptr(uintptr_t number, char *base, t_flag *flag)
 		i--;
 	}
 	return (converted);
-}
-
-int	reslen_ptr(uintptr_t number, char *base, int dot)
-{
-	int	i;
-	int	quo;
-	int	rem;
-
-	if (number == 0)
-		return (1 - dot);
-	i = 1;
-	quo = number / ft_strlen(base);
-	rem = number % ft_strlen(base);
-	while (quo != 0)
-	{
-		rem = quo % ft_strlen(base);
-		quo = quo / ft_strlen(base);
-		i++;
-	}
-	return (i);
 }
 
 void	print_p(uintptr_t number, t_flag *flag, char *base)
@@ -62,7 +61,7 @@ void	print_p(uintptr_t number, t_flag *flag, char *base)
 				if (flag->precision < reslen_ptr(number, base, flag->dot))
 					print_xchar(flag->width - (2 + reslen_ptr(number, base, flag->dot)), ' ', flag);
 				else
-					print_xchar(flag->width - flag->precision, ' ', flag);
+					print_xchar(flag->width - flag->precision - 2, ' ', flag);
 			}
 			else if (flag->precision > reslen_ptr(number, base, flag->dot))
 			{
@@ -85,7 +84,7 @@ void	print_p(uintptr_t number, t_flag *flag, char *base)
 				if (flag->precision < reslen_ptr(number, base, flag->dot))
 					print_xchar(flag->width - reslen_ptr(number, base, flag->dot) - 2, ' ', flag);
 				else
-					print_xchar(flag->width - flag->precision, ' ', flag);
+					print_xchar(flag->width - flag->precision - 2, ' ', flag);
 				print_xchar(flag->precision - reslen_ptr(number, base, flag->dot) - 2, '0', flag);
 			}
 		else if (flag->precision > reslen_ptr(number, base, flag->dot))
