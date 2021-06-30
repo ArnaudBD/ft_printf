@@ -1,105 +1,85 @@
 #include "../includes/ft_printf.h"
 
-void	print_u(unsigned int number, t_flag *flag)
+void	print_zeros(long long int number, t_counters *countr, t_flag *flag)
 {
-	// if (number < 0)
-	// {
-	// 	number = 4294967295 + number;
-	// 		printf("new is : %d\n", number);
-	// }
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	if (numlen(number) >= flag->width && numlen(number) >= flag->precision && (flag->dot != 1 || flag->precision != 0 || number != 0))
-			ft_putnbr_ret(number, flag);
-	else if (flag->minus == 1)
+	while (countr->i < (flag->precision - numlen(number)))
 	{
-		// if (number < 0)
-		// {
-		// 	number = 4294967295 + number;
-		// 	printf("new is : %d\n", number);
-		// }
-		if (flag->precision <= flag->width)
-		{
-			while (i < (flag->precision - numlen(number)))
-			{
-				ft_putchar_ret('0', flag);
-				i++;
-			}
-			if (i != 0)
-				j = flag->precision;
-			else if (flag->dot != 1 || flag->precision != 0 || number != 0)
-				j = numlen(number);
-			i = 0;
-			if (flag->dot != 1 || flag->precision != 0 || number != 0)
-				ft_putnbr_ret(number, flag);
-			while ((flag->width - j) > i)
-			{
-				ft_putchar_ret(' ', flag);
-				i++;
-			}
-		}
-		else if (flag->precision > numlen(number))
-		{
-
-			while (i < (flag->precision - numlen(number)))
-			{
-				ft_putchar_ret('0', flag);
-				i++;
-			}
-			if (flag->dot != 1 || flag->precision != 0 || number != 0)
-				ft_putnbr_ret(number, flag);
-		}
+		ft_putchar_ret('0', flag);
+		countr->i++;
 	}
-	else
+}
+
+void	u_minus_handler(long long int number, t_counters *countr, t_flag *flag)
+{
+	if (flag->precision <= flag->width)
 	{
-		i = 0;
-		if (number < 0)
-			j = 1;
-		while ((flag->width - (j + flag->precision)) > i && (flag->width - (j + numlen(number))) > i)
-		{
-			if (flag->zero == 1 && flag->dot == 0)
-				break;
-			else
-				ft_putchar_ret(' ', flag);
-			i++;
-		}
-		// if (number < 0)
-		// {
-		// 	number = 4294967295 + number;
-		// 	printf("new is : %d\n", number);
-		// }
-		i = 0;
-		if (flag->precision > flag->width)
-		{
-			while (i < (flag->precision - numlen(number)))
-			{
-				ft_putchar_ret('0', flag);
-				i++;
-			}
-		}
-		else if (flag->zero == 1 && flag->dot == 0)
-		{
-				while ((flag->width - (j + numlen(number))) > i)
-			{
-				ft_putchar_ret('0', flag);
-				i++;
-			}
-		i = 0;
-		}
-		while (i < (flag->precision - numlen(number)))
-			{
-				ft_putchar_ret('0', flag);
-				i++;
-			}
-		if (flag->dot == 1 && flag->precision == 0 && number == 0 && (numlen(number) <= flag->width || numlen(number) < flag->precision))
+		print_zeros(number, countr, flag);
+		if (countr->i != 0)
+			countr->j = flag->precision;
+		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
+			countr->j = numlen(number);
+		countr->i = 0;
+		if (flag->dot != 1 || flag->precision != 0 || number != 0)
+			ft_putnbr_ret(number, flag);
+		while ((flag->width - countr->j) > countr->i)
 		{
 			ft_putchar_ret(' ', flag);
+			countr->i++;
 		}
-		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
+	}
+	else if (flag->precision > numlen(number))
+	{
+		print_zeros(number, countr, flag);
+		if (flag->dot != 1 || flag->precision != 0 || number != 0)
 			ft_putnbr_ret(number, flag);
+	}
+}
+
+void	u_not_minus_handler(long long int n, t_counters *countr, t_flag *flag)
+{
+	while (!(flag->zero == 1 && flag->dot == 0)
+		&& ((flag->width - (countr->j + flag->precision)) > countr->i
+			&& (flag->width - (countr->j + numlen(n))) > countr->i++))
+		ft_putchar_ret(' ', flag);
+	countr->i = 0;
+	if (flag->precision > flag->width)
+		print_zeros(n, countr, flag);
+	else if (flag->zero == 1 && flag->dot == 0)
+	{
+		while ((flag->width - (countr->j + numlen(n))) > countr->i)
+		{
+			ft_putchar_ret('0', flag);
+			countr->i++;
+		}
+		countr->i = 0;
+	}
+	print_zeros(n, countr, flag);
+	if (flag->dot == 1 && flag->precision == 0 && n == 0
+		&& (numlen(n) <= flag->width || numlen(n) < flag->precision))
+		ft_putchar_ret(' ', flag);
+	else if (flag->dot != 1 || flag->precision != 0 || n != 0)
+		ft_putnbr_ret(n, flag);
+}
+
+void	print_u(unsigned int number, t_flag *flag)
+{
+	t_counters	a;
+	t_counters	*countr;
+
+	countr = &a;
+	countr->i = 0;
+	countr->j = 0;
+	if (numlen(number) >= flag->width && numlen(number) >= flag->precision
+		&& (flag->dot != 1 || flag->precision != 0 || number != 0))
+		ft_putnbr_ret(number, flag);
+	else if (flag->minus == 1)
+		u_minus_handler(number, countr, flag);
+	else
+	{
+		countr->i = 0;
+		if (number < 0)
+			countr->j = 1;
+		u_not_minus_handler(number, countr, flag);
 	}
 	return ;
 }

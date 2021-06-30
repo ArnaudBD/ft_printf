@@ -1,42 +1,11 @@
 #include "../includes/ft_printf.h"
 
-int	numlen(long long int number)
-{
-	int	magnitude;
-
-	magnitude = 0;
-	if (number == 0)
-		return (1);
-	while (number != 0)
-	{
-		number = number / 10;
-		magnitude++;
-	}
-	return (magnitude);
-}
-
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
 	else
 		return (0);
-}
-
-int		ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-void	ft_putchar_ret(char c, t_flag *flag)
-{
-	write(1, &c, 1);
-	flag->ret++;
 }
 
 void	writing(long long int odg, long long int n, t_flag *flag)
@@ -90,7 +59,7 @@ void	ft_putnbr_ret(long long int n, t_flag *flag)
 			ft_putchar_ret('-', flag);
 		n = -n;
 	}
-	if (/*flag->dot == 0 && */(n == 2147483647 || n == -2147483648))
+	if (n == 2147483647 || n == -2147483648)
 	{
 		isminmax(n, flag);
 		return ;
@@ -105,17 +74,17 @@ void	ft_putnbr_ret(long long int n, t_flag *flag)
 	return ;
 }
 
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int i;
-	int n;
-	int resultat;
+	int	i;
+	int	n;
+	int	resultat;
 
 	i = 0;
 	n = 1;
 	resultat = 0;
 	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\r' || str[i] == '\v'
-			|| str[i] == '\f' || str[i] == ' ')
+		|| str[i] == '\f' || str[i] == ' ')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{

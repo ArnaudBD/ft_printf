@@ -15,7 +15,7 @@ void	print_xchar(int x, char c, t_flag *flag)
 
 void	print_minus(long long int number, t_flag *flag)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (number < 0)
@@ -30,7 +30,7 @@ void	print_minus(long long int number, t_flag *flag)
 		if (flag->dot != 1 || flag->precision != 0 || number != 0)
 			ft_putnbr_ret(number, flag);
 		else
-			ft_putchar_ret(' ',  flag);
+			ft_putchar_ret(' ', flag);
 		if (flag->precision < numlen(number))
 			print_xchar(flag->width - numlen(number) - j, ' ', flag);
 		else
@@ -56,7 +56,7 @@ void	print_spaces(int number, t_flag *flag)
 		&& (flag->width - (j + numlen(number))) > i)
 	{
 		if (flag->zero == 1 && ((flag->dot == 0 && flag->precision <= 0)
-			|| flag->precision < 0))
+				|| flag->precision < 0))
 			break ;
 		else
 			ft_putchar_ret(' ', flag);
@@ -64,9 +64,9 @@ void	print_spaces(int number, t_flag *flag)
 	}
 }
 
-int		neg_handler(int *number, int neg, t_flag *flag)
+int	neg_handler(int *number, int neg, t_flag *flag)
 {
-	int n;
+	int	n;
 
 	n = *number;
 	if (n < 0 && n != -2147483648)
@@ -84,7 +84,7 @@ void	print_i_d(int number, t_flag *flag)
 
 	neg = 0;
 	if (numlen(number) >= flag->width && numlen(number) >= flag->precision
-		&& (flag->dot == 0 && number !=0))
+		&& (flag->dot == 0 && number != 0))
 		ft_putnbr_ret(number, flag);
 	else if (flag->minus == 1)
 		print_minus(number, flag);
@@ -93,7 +93,7 @@ void	print_i_d(int number, t_flag *flag)
 		print_spaces(number, flag);
 		neg = neg_handler(&number, neg, flag);
 		if (flag->zero == 1 && ((flag->dot == 0 && flag->precision <= 0)
-			|| flag->precision < 0))
+				|| flag->precision < 0))
 			print_xchar((flag->width - (neg + numlen(number))), '0', flag);
 		print_xchar(flag->precision - numlen(number), '0', flag);
 		if ((flag->dot == 1 && flag->precision == 0 && number == 0)

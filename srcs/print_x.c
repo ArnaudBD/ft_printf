@@ -1,42 +1,9 @@
 #include "../includes/ft_printf.h"
 
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	*ft_strdup(const char *src)
-{
-	int		size;
-	char	*str;
-	int		i;
-
-	size = ft_strlen(src);
-	str = malloc(sizeof(char) * size + 1);
-	if (!str)
-		return (0);
-	i = 0;
-	while (src[i])
-	{
-		str[i] = src[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
 void	ft_putstr_ret(char *s, t_flag *flag)
 {
 	int	i;
+
 	if (s == 0 && flag->dot == 1 && flag->precision < 0)
 		ft_putchar_ret('0', flag);
 	if (s == 0)
@@ -94,89 +61,51 @@ char	*convert_base(unsigned int number, char *base, t_flag *flag)
 	return (converted);
 }
 
-void	print_x(unsigned int number, t_flag *flag, char *base)
+void	x_minus_handler(unsigned int n, char *conv, t_flag *flag, char *base)
 {
-	char	*converted;
-if (flag->precision < 0)
-	flag->precision = -flag->precision;
-	converted = convert_base(number, base, flag);
-	if (flag->minus == 1)
-		{
-			if (flag->precision <= flag->width)
-			{
-				print_xchar(flag->precision - reslen(number, base, flag->dot), '0', flag);
-				ft_putstr_ret(converted, flag);
-
-				if (flag->precision < reslen(number, base, flag->dot))
-					print_xchar(flag->width - reslen(number, base, flag->dot), ' ', flag);
-				else
-					print_xchar(flag->width - flag->precision, ' ', flag);
-			}
-			else if (flag->precision > reslen(number, base, flag->dot))
-			{
-				print_xchar(flag->precision - reslen(number, base, flag->dot), '0', flag);
-				ft_putstr_ret(converted, flag);
-			}
-			else
-				ft_putstr_ret(converted, flag);
+	if (flag->precision <= flag->width)
+	{
+		print_xchar(flag->precision - reslen(n, base, flag->dot), '0', flag);
+		ft_putstr_ret(conv, flag);
+		if (flag->precision < reslen(n, base, flag->dot))
+			print_xchar(flag->width - reslen(n, base, flag->dot), ' ', flag);
+		else
+			print_xchar(flag->width - flag->precision, ' ', flag);
+	}
+	else if (flag->precision > reslen(n, base, flag->dot))
+	{
+		print_xchar(flag->precision - reslen(n, base, flag->dot), '0', flag);
+		ft_putstr_ret(conv, flag);
 	}
 	else
+		ft_putstr_ret(conv, flag);
+}
+
+void	print_x(unsigned int number, t_flag *f, char *base)
+{
+	char	*converted;
+
+	if (f->precision < 0)
+		f->precision = -f->precision;
+	converted = convert_base(number, base, f);
+	if (f->minus == 1)
+		x_minus_handler(number, converted, f, base);
+	else
 	{
-		if ((flag->zero == 1 && flag->precision < reslen(number, base, flag->dot)) && flag->dot == 0)
-			print_xchar(flag->width - reslen(number, base, flag->dot), '0', flag);
-		else if (flag->precision <= flag->width)
-			{
-				if (flag->precision < reslen(number, base, flag->dot))
-					print_xchar(flag->width - reslen(number, base, flag->dot), ' ', flag);
-				else
-					print_xchar(flag->width - flag->precision, ' ', flag);
-				print_xchar(flag->precision - reslen(number, base, flag->dot), '0', flag);
-			}
-		else if (flag->precision > reslen(number, base, flag->dot))
+		if ((f->zero == 1 && f->precision < reslen(number, base, f->dot))
+			&& f->dot == 0)
+			print_xchar(f->width - reslen(number, base, f->dot), '0', f);
+		else if (f->precision <= f->width)
 		{
-			print_xchar(flag->precision - reslen(number, base, flag->dot), '0', flag);
+			if (f->precision < reslen(number, base, f->dot))
+				print_xchar(f->width - reslen(number, base, f->dot), ' ', f);
+			else
+				print_xchar(f->width - f->precision, ' ', f);
+			print_xchar(f->precision - reslen(number, base, f->dot), '0', f);
 		}
-			ft_putstr_ret(converted, flag);
+		else if (f->precision > reslen(number, base, f->dot))
+			print_xchar(f->precision - reslen(number, base, f->dot), '0', f);
+		ft_putstr_ret(converted, f);
 	}
 	free(converted);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

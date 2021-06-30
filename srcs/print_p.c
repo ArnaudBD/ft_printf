@@ -2,9 +2,9 @@
 
 int	reslen_ptr(uintptr_t number, char *base, int dot)
 {
-	int	i;
+	int			i;
 	uintptr_t	quo;
-	int	rem;
+	int			rem;
 
 	if (number == 0)
 		return (1 - dot);
@@ -22,10 +22,10 @@ int	reslen_ptr(uintptr_t number, char *base, int dot)
 
 char	*convert_base_ptr(uintptr_t number, char *base, t_flag *flag)
 {
-	int				i;
+	int			i;
 	uintptr_t	quo;
 	uintptr_t	rem;
-	char			*converted;
+	char		*converted;
 
 	i = reslen_ptr(number, base, flag->dot) - 1;
 	quo = number / ft_strlen(base);
@@ -52,7 +52,6 @@ void	p_minus_handler(uintptr_t n, t_flag *f, char *base, char *c)
 		print_xchar(f->precision - (2 + reslen_ptr(n, base, f->dot)), '0', f);
 		ft_putstr_ret("0x", f);
 		ft_putstr_ret(c, f);
-
 		if (f->precision < reslen_ptr(n, base, f->dot))
 			print_xchar(f->width - (2 + reslen_ptr(n, base, f->dot)), ' ', f);
 		else
@@ -97,43 +96,3 @@ void	print_p(uintptr_t n, t_flag *f, char *b)
 	}
 	free(converted);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
