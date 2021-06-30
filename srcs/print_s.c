@@ -28,6 +28,54 @@ int		null_handler(int i, int k, t_flag *f)
 	return (k);
 }
 
+int		len_calculator(const char *string, int *j, t_flag *flag)
+{
+	int len;
+
+	if (string != NULL)
+		len = ft_strlen(string);
+	else
+	{
+		*j += 6;
+		if (flag->dot == 0 || flag->precision > 5)
+			len = 6;
+		else
+			len = flag->precision;
+	}
+	return (len);
+}
+
+void not_minus_handler(int j, int len, const char *string, t_flag *f)
+{
+	int i;
+	int k;
+
+	i = 0;
+	k = 0;
+	if (f->dot == 1)
+	{
+		j = -1;
+		while (j++ >= -1 && (f->precision >= 0 && (f->width - (j + len) > 0
+			|| f->width - (j + f->precision) > 0)))
+			ft_putchar_ret(' ', f);
+		if (string == NULL)
+			k = null_handler(i, k, f);
+		else while (f->precision-- != 0 && string[i] != 0)
+			ft_putchar_ret(string[i++], f);
+	}
+	else
+	{
+		if (string == NULL)
+			len = 0;
+		while (f->width - (len + j++) > 0)
+			ft_putchar_ret(' ', f);
+		if (string == NULL)
+			k = null_handler(i, k, f);
+		else while (string[i] != 0)
+			ft_putchar_ret(string[i++], f);
+	}
+}
+
 void	print_s(const char *string, t_flag *flag)
 {
 	int		i;
@@ -38,112 +86,46 @@ void	print_s(const char *string, t_flag *flag)
 	i = 0;
 	j = 0;
 	k = 0;
-	if (string != NULL)
-		len = ft_strlen(string);
-	else
+	len = len_calculator(string, &j, flag);
+	if (flag->minus == 1)
 	{
-		j += 6;
-		if (flag->dot == 0)
-			len = 6;
-		else if (flag->precision > 5)
-			len = 6;
+		if (flag->dot == 1)
+		{
+			if (string == NULL)
+				k = null_handler(i, k, flag);
+			else if (flag->precision >= 0)
+				while (flag->precision > 0 && string[i] != 0)
+				{
+					ft_putchar_ret(string[i++], flag);
+					if (flag->precision < flag->width)
+						flag->precision--;
+				}
+			else
+			{
+				flag->precision = -flag->precision + 2;
+				while (flag->precision > 0 && string[i] != 0)
+				{
+					ft_putchar_ret(string[i++], flag);
+					if (-flag->precision < flag->width)
+						flag->precision--;
+				}
+				flag->precision = -flag->precision;
+			}
+			if (flag->width < 0)
+				flag->width = -flag->width;
+			while (flag->width - i++ - k > 0)
+				ft_putchar_ret(' ', flag);
+		}
 		else
-			len = flag->precision;
+		{
+			if (string == NULL)
+				k = null_handler(i, k, flag);
+			else while (string[i] != 0)
+				ft_putchar_ret(string[i++], flag);
+			while (flag->width - i++ - k > 0)
+				ft_putchar_ret(' ', flag);
+		}
 	}
-
-	
-		if (flag->minus == 1)
-		{
-			if (flag->dot == 1)
-			{
-				if (string == NULL)
-				{
-					k = null_handler(i, k, flag);
-				}
-				else if (flag->precision >= 0)
-					while (flag->precision > 0 && string[i] != 0)
-					{
-						ft_putchar_ret(string[i], flag);
-						i++;
-						if (flag->precision < flag->width)
-							flag->precision--;
-					}
-				else
-				{
-					flag->precision = -flag->precision + 2;
-					while (flag->precision > 0 && string[i] != 0)
-					{
-						ft_putchar_ret(string[i], flag);
-						i++;
-						if (-flag->precision < flag->width)
-							flag->precision--;
-					}
-					flag->precision = -flag->precision;
-				}
-				if (flag->width < 0)
-					flag->width = -flag->width;
-				while (flag->width - i - k > 0)
-				{
-					ft_putchar_ret(' ', flag);
-					i++;
-				}
-			}
-			else
-			{
-				if (string == NULL)
-					k = null_handler(i, k, flag);
-				else while (string[i] != 0)
-				{
-					ft_putchar_ret(string[i], flag);
-					i++;
-				}
-				while (flag->width - i - k > 0)
-				{
-					ft_putchar_ret(' ', flag);
-					i++;
-				}
-			}
-		}
-		else
-		{
-			if (flag->dot == 1)
-			{
-				j = 0;
-				
-				while (flag->precision >= 0 && (flag->width - (j + len) > 0 || flag->width - (j + flag->precision) > 0))
-				{
-					ft_putchar_ret(' ', flag);
-					j++;
-				}
-				if (string == NULL)
-					k = null_handler(i, k, flag);
-				else while (flag->precision != 0 && string[i] != 0)
-				{
-					ft_putchar_ret(string[i], flag);
-					i++;
-					flag->precision--;
-				}
-			}
-			else
-			{
-				if (string == NULL)
-					len = 0;
-				while (flag->width - (len + j) > 0)
-				{
-					ft_putchar_ret(' ', flag);
-					j++;
-				}
-				if (string == NULL)
-				{
-					k = null_handler(i, k, flag);
-				}
-				else while (string[i] != 0)
-				{
-					ft_putchar_ret(string[i], flag);
-					i++;
-				}
-			}
-		}
-//	}
-	return ;
+	else
+		not_minus_handler(j, len, string, flag);
 }

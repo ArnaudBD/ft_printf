@@ -15,8 +15,6 @@ void	print_xchar(int x, char c, t_flag *flag)
 
 void	print_minus(long long int number, t_flag *flag)
 {
-	// if (flag->precision < 0)
-	// 	flag->width = flag->precision;
 	int j;
 
 	j = 0;
@@ -99,7 +97,8 @@ void	print_i_d(int number, t_flag *flag)
 			print_xchar((flag->width - (neg + numlen(number))), '0', flag);
 		print_xchar(flag->precision - numlen(number), '0', flag);
 		if ((flag->dot == 1 && flag->precision == 0 && number == 0)
-			&& (numlen(number) < flag->width || numlen(number) < flag->precision))
+			&& (numlen(number) < flag->width
+				|| numlen(number) < flag->precision))
 			ft_putchar_ret(' ', flag);
 		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
 			ft_putnbr_ret(number, flag);

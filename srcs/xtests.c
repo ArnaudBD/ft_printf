@@ -19,9 +19,9 @@ int main()
 	// ret = ft_printf("14 < yeyeye%d%d%dyeyeye", 1, -2, 3);
 	// printf("  << RETURN: %d\n", ret);
 
-	ret = printf("15 > |%19.*d|yeyeye|%19.*d|yeyeye", -14, 123456789, -14, -42);
+	ret = printf("15 > |%32s|", NULL);
 	printf("  >> RETURN: %d\n", ret);
-	ret = ft_printf("15 < |%19.*d|yeyeye|%19.*d|yeyeye", -14, 123456789, -14, -42);
+	ret = ft_printf("15 < |%32s|", NULL);
 	printf("  << RETURN: %d\n", ret);
 
 	// ret = printf("16 > %15.*dyeyeye%2.*dyeyeye", -2, -123456789, -2, 8);
