@@ -1,5 +1,20 @@
 #include "../includes/ft_printf.h"
 
+int	numlen(long long int number)
+{
+	int	magnitude;
+
+	magnitude = 0;
+	if (number == 0)
+		return (1);
+	while (number != 0)
+	{
+		number = number / 10;
+		magnitude++;
+	}
+	return (magnitude);
+}
+
 int		ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')

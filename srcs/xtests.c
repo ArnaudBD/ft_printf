@@ -9,9 +9,9 @@ int main()
 
 	i = -2147483648;
 
-	ret = printf("|%.p|", NULL);
+	ret = printf("|%.*s|", -3, NULL);
 	printf("  >> RETURN: %d\n", ret);
-	ret = ft_printf("|%.p|", NULL);
+	ret = ft_printf("|%.*s|", -3, NULL);
 	printf("  >> RETURN: %d\n", ret);
 	// ret = printf("|%10.p|", NULL);
 	// printf("  >> RETURN: %d\n", ret);

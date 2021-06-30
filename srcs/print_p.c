@@ -45,54 +45,55 @@ char	*convert_base_ptr(uintptr_t number, char *base, t_flag *flag)
 	return (converted);
 }
 
-void	print_p(uintptr_t number, t_flag *flag, char *base)
+void	p_minus_handler(uintptr_t n, t_flag *f, char *base, char *c)
+{
+	if (f->precision <= f->width)
+	{
+		print_xchar(f->precision - (2 + reslen_ptr(n, base, f->dot)), '0', f);
+		ft_putstr_ret("0x", f);
+		ft_putstr_ret(c, f);
+
+		if (f->precision < reslen_ptr(n, base, f->dot))
+			print_xchar(f->width - (2 + reslen_ptr(n, base, f->dot)), ' ', f);
+		else
+			print_xchar(f->width - f->precision - 2, ' ', f);
+	}
+	else if (f->precision > reslen_ptr(n, base, f->dot))
+	{
+		print_xchar(f->precision - (2 + reslen_ptr(n, base, f->dot)), '0', f);
+		ft_putstr_ret("0x", f);
+		ft_putstr_ret(c, f);
+	}
+	else
+	{
+		ft_putstr_ret("0x", f);
+		ft_putstr_ret(c, f);
+	}
+}
+
+void	print_p(uintptr_t n, t_flag *f, char *b)
 {
 	char	*converted;
 
-	converted = convert_base_ptr(number, base, flag);
-	if (flag->minus == 1)
-		{
-			if (flag->precision <= flag->width)
-			{
-				print_xchar(flag->precision - (2 + reslen_ptr(number, base, flag->dot)), '0', flag);
-				ft_putstr_ret("0x", flag);
-				ft_putstr_ret(converted, flag);
-
-				if (flag->precision < reslen_ptr(number, base, flag->dot))
-					print_xchar(flag->width - (2 + reslen_ptr(number, base, flag->dot)), ' ', flag);
-				else
-					print_xchar(flag->width - flag->precision - 2, ' ', flag);
-			}
-			else if (flag->precision > reslen_ptr(number, base, flag->dot))
-			{
-				print_xchar(flag->precision - (2 + reslen_ptr(number, base, flag->dot)), '0', flag);
-				ft_putstr_ret("0x", flag);
-				ft_putstr_ret(converted, flag);
-			}
-			else
-			{
-				ft_putstr_ret("0x", flag);
-				ft_putstr_ret(converted, flag);
-			}
-		}
+	converted = convert_base_ptr(n, b, f);
+	if (f->minus == 1)
+		p_minus_handler(n, f, b, converted);
 	else
 	{
-		if (flag->zero == 1 && flag->precision < reslen_ptr(number, base, flag->dot))
-			print_xchar(flag->width - reslen_ptr(number, base, flag->dot), '0', flag);
-		else if (flag->precision <= flag->width)
-			{
-				if (flag->precision < reslen_ptr(number, base, flag->dot))
-					print_xchar(flag->width - reslen_ptr(number, base, flag->dot) - 2, ' ', flag);
-				else
-					print_xchar(flag->width - flag->precision - 2, ' ', flag);
-				print_xchar(flag->precision - reslen_ptr(number, base, flag->dot) - 2, '0', flag);
-			}
-		else if (flag->precision > reslen_ptr(number, base, flag->dot))
+		if (f->zero == 1 && f->precision < reslen_ptr(n, b, f->dot))
+			print_xchar(f->width - reslen_ptr(n, b, f->dot), '0', f);
+		else if (f->precision <= f->width)
 		{
-			print_xchar(flag->precision - reslen_ptr(number, base, flag->dot) - 2, '0', flag);
+			if (f->precision < reslen_ptr(n, b, f->dot))
+				print_xchar(f->width - reslen_ptr(n, b, f->dot) - 2, ' ', f);
+			else
+				print_xchar(f->width - f->precision - 2, ' ', f);
+			print_xchar(f->precision - reslen_ptr(n, b, f->dot) - 2, '0', f);
 		}
-			ft_putstr_ret("0x", flag);
-			ft_putstr_ret(converted, flag);
+		else if (f->precision > reslen_ptr(n, b, f->dot))
+			print_xchar(f->precision - reslen_ptr(n, b, f->dot) - 2, '0', f);
+		ft_putstr_ret("0x", f);
+		ft_putstr_ret(converted, f);
 	}
 	free(converted);
 }
