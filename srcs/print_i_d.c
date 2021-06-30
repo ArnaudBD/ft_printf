@@ -15,6 +15,8 @@ void	print_xchar(int x, char c, t_flag *flag)
 
 void	print_minus(long long int number, t_flag *flag)
 {
+	// if (flag->precision < 0)
+	// 	flag->width = flag->precision;
 	int j;
 
 	j = 0;

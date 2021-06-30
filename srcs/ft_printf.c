@@ -6,8 +6,8 @@ int		star_handler(int i, t_flag *flag, va_list *ap)
 		flag->width = va_arg(*ap, int);
 	else
 		flag->precision = va_arg(*ap, int);
-	if (flag->precision < 0 && flag->minus == 0 && flag->width >= 0)
-				flag->minus = 1;
+	// if (flag->precision < 0 && flag->minus == 0 && flag->width >= 0)
+	// 			flag->minus = 1;
 	if (flag->width < 0 && flag->precision >= 0)
 	{
 		flag->minus = 1;
