@@ -29,14 +29,14 @@ void	print_minus(long long int number, t_flag *flag)
 	{
 		if (flag->dot != 1 || flag->precision != 0 || number != 0)
 			ft_putnbr_ret(number, flag);
-		else
+		else if (flag->precision != 0 || flag->width > 0)
 			ft_putchar_ret(' ', flag);
 		if (flag->precision < numlen(number))
 			print_xchar(flag->width - numlen(number) - j, ' ', flag);
 		else
 			print_xchar(flag->width - flag->precision - j, ' ', flag);
 	}
-	else if (flag->precision > numlen(number))
+	else
 		ft_putnbr_ret(number, flag);
 }
 

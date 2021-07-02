@@ -6,8 +6,11 @@ SRC =  ft_printf.c\
 		print_s.c\
 		print_u.c\
 		utils.c\
+		utils2.c\
+		utils3.c\
 		print_x.c\
-		print_percentage.c
+		print_percentage.c\
+		print_p.c\
 
 SRCS	=	$(addprefix srcs/, $(SRC))
 
@@ -27,19 +30,19 @@ RM = rm -f
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	make -C libft
-	cp libft/libft.a $(NAME)
 	$(AR) $(NAME) $(OBJS)
+#	make -C libft
+#	cp libft/libft.a $(NAME)
 
 all: $(NAME)
 
 clean:
-	make clean -C libft
 	$(RM) $(OBJS)
+# 	make clean -C libft
 
 fclean: clean
-	make fclean -C libft
 	$(RM) $(NAME)
+# 	make fclean -C libft
 
 re: fclean all
 

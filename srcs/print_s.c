@@ -20,12 +20,15 @@ int	len_calculator(const char *string, t_counters *countr, t_flag *flag)
 void	not_minus_handler(t_counters *countr, int l, const char *s, t_flag *f)
 {
 	if (f->dot == 1)
-	{
+	{	
 		countr->j = -1;
 		while (countr->j++ >= -1
-			&& (f->precision >= 0 && (f->width - (countr->j + l) > 0
-					|| f->width - (countr->j + f->precision) > 0)))
+			&& /*((f->precision < 0 && (f->width - (countr->j + l) > 0 || f->width - countr->j + f->precision > 0))
+			|| */(f->precision >= 0 && (f->width - (countr->j + l) > 0
+					|| f->width - (countr->j + f->precision) > 0)))//)
+		{
 			ft_putchar_ret(' ', f);
+		}
 		if (s == NULL)
 			countr->k = null_handler(countr, f);
 		else
@@ -48,11 +51,13 @@ void	not_minus_handler(t_counters *countr, int l, const char *s, t_flag *f)
 
 void	ft_norme(const char *string, t_counters *countr, t_flag *flag)
 {
-	while (flag->precision > 0 && string[countr->i] != 0)
+	while (flag->precision != 0 && string[countr->i] != 0)
 	{
 		ft_putchar_ret(string[countr->i++], flag);
-		if (-flag->precision < flag->width)
+		if (-flag->precision < flag->width && flag->precision > 0)
 			flag->precision--;
+		// if (flag->precision < flag->width && flag->precision < 0)
+		// 	flag->precision++;
 	}
 }
 
@@ -64,9 +69,9 @@ void	dot_minus_handler(const char *string, t_counters *countr, t_flag *flag)
 		ft_norme(string, countr, flag);
 	else
 	{
-		flag->precision = -flag->precision + 2;
+		// flag->precision = -flag->precision/* + 2*/;
 		ft_norme(string, countr, flag);
-		flag->precision = -flag->precision;
+		// flag->precision = -flag->precision;
 	}
 	if (flag->width < 0)
 		flag->width = -flag->width;

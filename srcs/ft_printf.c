@@ -97,5 +97,6 @@ int	ft_printf(const char *str, ...)
 			i++;
 		flag_initializer(&a);
 	}
+	va_end(ap);
 	return (flag->ret);
 }
