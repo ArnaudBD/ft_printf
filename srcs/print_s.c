@@ -6,6 +6,8 @@ int	len_calculator(const char *string, t_counters *countr, t_flag *flag)
 
 	if (string != NULL)
 		len = ft_strlen(string);
+	else if (flag->dot == 1)
+		len = flag->precision;
 	else
 	{
 		countr->j += 6;
@@ -20,12 +22,11 @@ int	len_calculator(const char *string, t_counters *countr, t_flag *flag)
 void	not_minus_handler(t_counters *countr, int l, const char *s, t_flag *f)
 {
 	if (f->dot == 1)
-	{	
+	{
 		countr->j = -1;
-		while (countr->j++ >= -1
-			&& /*((f->precision < 0 && (f->width - (countr->j + l) > 0 || f->width - countr->j + f->precision > 0))
-			|| */(f->precision >= 0 && (f->width - (countr->j + l) > 0
-					|| f->width - (countr->j + f->precision) > 0)))//)
+		while (countr->j++ >= -1 && f->width != 0
+			&& (((f->precision < 0 && (f->width - (countr->j + l) > 0)))
+			|| (f->precision >= 0 && (f->width - (countr->j + l) > 0 || (f->width != 0 && f->width - (countr->j + f->precision) > 0)))))
 		{
 			ft_putchar_ret(' ', f);
 		}

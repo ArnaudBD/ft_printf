@@ -33,6 +33,7 @@ int	reslen(unsigned int number, char *base, int dot)
 		quo = quo / ft_strlen(base);
 		i++;
 	}
+printf("i = %d\n", i);
 	return (i);
 }
 
@@ -43,12 +44,19 @@ char	*convert_base(unsigned int number, char *base, t_flag *flag)
 	int		rem;
 	char	*converted;
 
+	converted = NULL;
 	i = reslen(number, base, flag->dot) - 1;
 	quo = number / ft_strlen(base);
 	rem = number % ft_strlen(base);
-	converted = malloc(sizeof(char *) * i + 1);
+	if (i < 0)
+	{
+		printf("i = %d\n", i);
+		return ("0");
+	}
+	else if (i > 0)
+		converted = malloc(sizeof(char *) * i + 1);
 	if (!converted)
-		return (0);
+		return ("0");
 	else
 		converted[i + 1] = 0;
 	while (i >= 0)
@@ -85,8 +93,8 @@ void	print_x(unsigned int number, t_flag *f, char *base)
 {
 	char	*converted;
 
-	if (f->precision < 0)
-		f->precision = -f->precision;
+	/*if (f->precision < 0)
+		f->precision = -f->precision;*/
 	converted = convert_base(number, base, f);
 	if (f->minus == 1)
 		x_minus_handler(number, converted, f, base);
@@ -104,8 +112,13 @@ void	print_x(unsigned int number, t_flag *f, char *base)
 			print_xchar(f->precision - reslen(number, base, f->dot), '0', f);
 		}
 		else if (f->precision > reslen(number, base, f->dot))
+		{
+			/*printf("precision = %d\n", f->precision);
+			printf("reslen = %d\n", reslen(number, base, f->dot));*/
 			print_xchar(f->precision - reslen(number, base, f->dot), '0', f);
+		}
 		ft_putstr_ret(converted, f);
 	}
-	free(converted);
+	if (converted[0] != '0')
+		free(converted);
 }
