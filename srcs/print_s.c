@@ -1,90 +1,103 @@
 #include "../includes/ft_printf.h"
 
-void	print_zeros(long long int number, t_counters *countr, t_flag *flag)
+int	len_calculator(const char *string, t_counters *countr, t_flag *flag)
 {
-	while (countr->i < (flag->precision - numlen(number)))
-	{
-		ft_putchar_ret('0', flag);
-		countr->i++;
-	}
-}
+	int	len;
 
-void	u_minus_handler(long long int number, t_counters *countr, t_flag *flag)
-{
-	if (flag->precision <= flag->width)
-	{
-		print_zeros(number, countr, flag);
-		if (countr->i != 0)
-			countr->j = flag->precision;
-		else if (flag->dot != 1 || flag->precision != 0 || number != 0)
-			countr->j = numlen(number);
-		countr->i = 0;
-		if (flag->dot != 1 || flag->precision != 0 || number != 0)
-			ft_putnbr_ret(number, flag);
-		while ((flag->width - countr->j) > countr->i)
-		{
-			ft_putchar_ret(' ', flag);
-			countr->i++;
-		}
-	}
-	else if (flag->precision > numlen(number))
-	{
-		print_zeros(number, countr, flag);
-		if (flag->dot != 1 || flag->precision != 0 || number != 0)
-			ft_putnbr_ret(number, flag);
-	}
-}
-
-void	u_not_minus_handler(long long int n, t_counters *countr, t_flag *flag)
-{
-	while (!(flag->zero == 1 && flag->dot == 0)
-		&& ((flag->width - (countr->j + flag->precision)) > countr->i
-			&& (flag->width - (countr->j + numlen(n))) > countr->i++))
-	{
-		if (flag->zero == 1 && flag->precision < 0)
-			ft_putchar_ret('0', flag);
-		else
-			ft_putchar_ret(' ', flag);
-	}
-	countr->i = 0;
-	if (flag->precision > flag->width)
-		print_zeros(n, countr, flag);
-	else if (flag->zero == 1 && flag->dot == 0)
-	{
-		while ((flag->width - (countr->j + numlen(n))) > countr->i)
-		{
-			ft_putchar_ret('0', flag);
-			countr->i++;
-		}
-		countr->i = 0;
-	}
-	print_zeros(n, countr, flag);
-	if (flag->dot == 1 && flag->precision == 0 && n == 0
-		&& (numlen(n) <= flag->width || numlen(n) < flag->precision))
-		ft_putchar_ret(' ', flag);
-	else if (flag->dot != 1 || flag->precision != 0 || n != 0)
-		ft_putnbr_ret(n, flag);
-}
-
-void	print_u(unsigned int number, t_flag *flag)
-{
-	t_counters	a;
-	t_counters	*countr;
-
-	countr = &a;
-	countr->i = 0;
-	countr->j = 0;
-	if (numlen(number) >= flag->width && numlen(number) >= flag->precision
-		&& (flag->dot != 1 || flag->precision != 0 || number != 0))
-		ft_putnbr_ret(number, flag);
-	else if (flag->minus == 1)
-		u_minus_handler(number, countr, flag);
+	if (string != NULL)
+		len = ft_strlen(string);
+	else if (flag->dot == 1)
+		len = flag->precision;
 	else
 	{
-		countr->i = 0;
-		if (number < 0)
-			countr->j = 1;
-		u_not_minus_handler(number, countr, flag);
+		countr->j += 6;
+		if (flag->dot == 0 || flag->precision > 5)
+			len = 6;
+		else
+			len = flag->precision;
 	}
-	return ;
+	return (len);
+}
+
+void	not_minus_handler(t_counters *countr, int l, const char *s, t_flag *f)
+{
+	if (f->dot == 1)
+	{
+		countr->j = -1;
+		while (countr->j++ >= -1 && f->width != 0 && (((f->precision < 0
+						&& (f->width - (countr->j + l) > 0)))
+				|| (f->precision >= 0 && (f->width - (countr->j + l) > 0
+						|| (f->width != 0
+							&& f->width - (countr->j + f->precision) > 0)))))
+			ft_putchar_ret(' ', f);
+		if (s == NULL)
+			countr->k = null_handler(countr, f);
+		else
+			while (f->precision-- != 0 && s[countr->i] != 0)
+				ft_putchar_ret(s[countr->i++], f);
+	}
+	else
+	{
+		if (s == NULL)
+			l = 0;
+		while (f->width - (l + countr->j++) > 0)
+			ft_putchar_ret(' ', f);
+		if (s == NULL)
+			countr->k = null_handler(countr, f);
+		else
+			while (s[countr->i] != 0)
+				ft_putchar_ret(s[countr->i++], f);
+	}
+}
+
+void	ft_norme(const char *string, t_counters *countr, t_flag *flag)
+{
+	while (flag->precision != 0 && string[countr->i] != 0)
+	{
+		ft_putchar_ret(string[countr->i++], flag);
+		if (-flag->precision < flag->width && flag->precision > 0)
+			flag->precision--;
+	}
+}
+
+void	dot_minus_handler(const char *string, t_counters *countr, t_flag *flag)
+{
+	if (string == NULL)
+		countr->k = null_handler(countr, flag);
+	else if (flag->precision >= 0)
+		ft_norme(string, countr, flag);
+	else
+		ft_norme(string, countr, flag);
+	if (flag->width < 0)
+		flag->width = -flag->width;
+	while (flag->width - countr->i++ - countr->k > 0)
+		ft_putchar_ret(' ', flag);
+}
+
+void	print_s(const char *string, t_flag *flag)
+{
+	int			len;
+	t_counters	*countr;
+	t_counters	a;
+
+	countr = &a;
+	countr_initializer(&a);
+	len = len_calculator(string, countr, flag);
+	if (flag->minus == 1)
+	{
+		if (flag->dot == 1)
+			dot_minus_handler(string, countr, flag);
+		else
+		{
+			if (string == NULL)
+				countr->k = null_handler(countr, flag);
+			else
+				while (string[countr->i] != 0)
+					ft_putchar_ret(string[countr->i++], flag);
+			while (flag->width - countr->i++ - countr->k > 0)
+				ft_putchar_ret(' ', flag);
+		}
+	}
+	else
+		not_minus_handler(countr, len, string, flag);
 }

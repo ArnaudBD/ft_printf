@@ -27,7 +27,6 @@ int	dot_handler(const char *str, int i, t_flag *flag)
 
 int	flag_organizer(const char *str, int i, t_flag *flag, va_list *ap)
 {
-	i++;
 	while (str[i] != '%' && str[i] != 'c' && str[i] != 's' && str[i] != 'p'
 		&& str[i] != 'd' && str[i] != 'i' && str[i] != 'u'
 		&& str[i] != 'x' && str[i] != 'X' && str[i] != 0)
@@ -49,19 +48,8 @@ int	flag_organizer(const char *str, int i, t_flag *flag, va_list *ap)
 			i++;
 		}
 		while (ft_isdigit(str[i]))
-		{
-
 			i++;
-		}
-		while (str[i] != '%' && str[i] != 'c' && str[i] != 's' && str[i] != 'p'
-		&& str[i] != 'd' && str[i] != 'i' && str[i] != 'u'
-		&& str[i] != 'x' && str[i] != 'X' && str[i] != 0 && str[i] != '*'
-		&& str[i] != '0' && str[i] != '.' && !ft_isdigit(str[i]) && str[i] != ' '
-		&& str[i] != '-')
-		{
-			i++;
-			return (i);
-		}
+		i = is_flag(str, i);
 	}
 	return (i);
 }
@@ -103,14 +91,8 @@ int	ft_printf(const char *str, ...)
 		while (str[i] != '%' && str[i] != 0)
 			ft_putchar_ret(str[i++], flag);
 		if (str[i] == '%')
-		{
-			// printf("1\n");
-			i = flag_organizer(str, i, flag, &ap);
-			// printf("2\n");
-
-		}
+			i = flag_organizer(str, ++i, flag, &ap);
 		arg_printer(str, &ap, i, flag);
-		// printf("2\n");
 		if (str[i] != 0)
 			i++;
 		flag_initializer(&a);

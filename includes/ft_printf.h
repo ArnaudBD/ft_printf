@@ -45,5 +45,8 @@ char	*convert_base(unsigned int number, char *base, t_flag *flag);
 void	flag_initializer(t_flag *a);
 void 	countr_initializer(t_counters *a);
 int		null_handler(t_counters *c, t_flag *f);
+int		is_flag(const char *str, int i);
+
+
 
 #endif
