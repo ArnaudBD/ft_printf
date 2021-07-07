@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/07 09:53:01 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/07/07 09:53:05 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdlib.h>
@@ -12,15 +24,15 @@ typedef struct s_flag
 	int	zero;
 	int	dot;
 	int	precision;
-	int ret;
-} t_flag;
+	int	ret;
+}	t_flag;
 
 typedef struct s_counters
 {
 	int	i;
 	int	j;
 	int	k;
-} t_counters;
+}	t_counters;
 
 void	ft_putstr_ret(char *s, t_flag *flag);
 int		ft_strlen(const char *s);
@@ -43,10 +55,10 @@ void	print_percentage(t_flag *flag);
 int		reslen(unsigned int number, char *base, t_flag *flag);
 char	*convert_base(unsigned int number, char *base, t_flag *flag);
 void	flag_initializer(t_flag *a);
-void 	countr_initializer(t_counters *a);
+void	countr_initializer(t_counters *a);
 int		null_handler(t_counters *c, t_flag *f);
 int		is_flag(const char *str, int i);
-
-
+void	not_m_but_dot_handler(t_counters *c, int l, const char *s, t_flag *f);
+void	x_not_minus_handler(unsigned int n, char *conv, t_flag *flag, char *base);
 
 #endif

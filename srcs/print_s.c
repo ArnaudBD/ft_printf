@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_s.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/07 09:49:55 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/07/07 09:52:18 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_printf.h"
 
 int	len_calculator(const char *string, t_counters *countr, t_flag *flag)
@@ -22,20 +34,7 @@ int	len_calculator(const char *string, t_counters *countr, t_flag *flag)
 void	not_minus_handler(t_counters *countr, int l, const char *s, t_flag *f)
 {
 	if (f->dot == 1)
-	{
-		countr->j = -1;
-		while (countr->j++ >= -1 && f->width != 0 && (((f->precision < 0
-						&& (f->width - (countr->j + l) > 0)))
-				|| (f->precision >= 0 && (f->width - (countr->j + l) > 0
-						|| (f->width != 0
-							&& f->width - (countr->j + f->precision) > 0)))))
-			ft_putchar_ret(' ', f);
-		if (s == NULL)
-			countr->k = null_handler(countr, f);
-		else
-			while (f->precision-- != 0 && s[countr->i] != 0)
-				ft_putchar_ret(s[countr->i++], f);
-	}
+		not_m_but_dot_handler(countr, l, s, f);
 	else
 	{
 		if (s == NULL)

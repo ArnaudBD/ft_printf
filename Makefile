@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/07/07 09:53:19 by abiju-du          #+#    #+#              #
+#    Updated: 2021/07/07 09:53:26 by abiju-du         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = libftprintf.a
 
 SRC =  ft_printf.c\
@@ -8,6 +20,7 @@ SRC =  ft_printf.c\
 		utils.c\
 		utils2.c\
 		utils3.c\
+		utils4.c\
 		print_x.c\
 		print_percentage.c\
 		print_p.c\

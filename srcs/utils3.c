@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils3.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/07 09:50:26 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/07/07 09:52:29 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_printf.h"
 
 void	ft_putchar_ret(char c, t_flag *flag)
@@ -52,4 +64,20 @@ int	is_flag(const char *str, int i)
 		&& !ft_isdigit(str[i]) && str[i] != ' ' && str[i] != '-')
 		return (++i);
 	return (i);
+}
+
+void	not_m_but_dot_handler(t_counters *countr, int l, const char *s, t_flag *f)
+{
+	countr->j = -1;
+	while (countr->j++ >= -1 && f->width != 0 && (((f->precision < 0
+					&& (f->width - (countr->j + l) > 0)))
+			|| (f->precision >= 0 && (f->width - (countr->j + l) > 0
+					|| (f->width != 0
+						&& f->width - (countr->j + f->precision) > 0)))))
+		ft_putchar_ret(' ', f);
+	if (s == NULL)
+		countr->k = null_handler(countr, f);
+	else
+		while (f->precision-- != 0 && s[countr->i] != 0)
+			ft_putchar_ret(s[countr->i++], f);
 }

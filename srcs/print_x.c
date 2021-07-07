@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_x.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiju-du <abiju-du@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/07 09:50:05 by abiju-du          #+#    #+#             */
+/*   Updated: 2021/07/07 09:52:23 by abiju-du         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_printf.h"
-#include <stdio.h>
 
 void	ft_putstr_ret(char *s, t_flag *flag)
 {
@@ -91,26 +102,7 @@ void	print_x(unsigned int number, t_flag *f, char *base)
 	if (f->minus == 1)
 		x_minus_handler(number, converted, f, base);
 	else
-	{
-		if ((f->zero == 1 && f->precision < 0) || (f->zero == 1 && f->dot == 0))
-		{
-			if (f->precision < reslen(number, base, f))
-				print_xchar(f->width - reslen(number, base, f), '0', f);
-			else if (f->precision > 0)
-				print_xchar(f->precision - reslen(number, base, f), '0', f);
-		}
-		else if (f->precision <= f->width)
-		{
-			if (f->precision < reslen(number, base, f))
-				print_xchar(f->width - reslen(number, base, f), ' ', f);
-			else
-				print_xchar(f->width - f->precision, ' ', f);
-			print_xchar(f->precision - reslen(number, base, f), '0', f);
-		}
-		else if (f->precision > reslen(number, base, f))
-			print_xchar(f->precision - reslen(number, base, f), '0', f);
-		ft_putstr_ret(converted, f);
-	}
+		x_not_minus_handler(number, converted, f, base);
 	if (converted[0] != '0')
 		free(converted);
 }
